@@ -1,609 +1,342 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IBFS Admission App 2026</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css" />
-  <style>
-    * { box-sizing: border-box; }
-    body { margin: 0; font-family: Inter, Arial, sans-serif; background: #f5f7fb; color: #1f2937; }
-    .container { max-width: 880px; margin: 0 auto; padding: 16px; }
-    .card { background: #fff; border-radius: 18px; box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08); overflow: hidden; }
-    .header { padding: 22px; background: linear-gradient(135deg, #1d4ed8, #2563eb); color: white; }
-    .header h1 { margin: 0; font-size: 24px; line-height: 1.3; }
-    .panel { padding: 16px 18px; border-bottom: 1px solid #eef2f7; }
-    .search-card, .global-card { background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 16px; padding: 16px; }
-    .grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
-    .field { display: flex; flex-direction: column; gap: 8px; }
-    label { font-size: 14px; font-weight: 600; color: #374151; }
-    input, select, button { font: inherit; }
-    input, select { width: 100%; padding: 13px 14px; border: 1px solid #d1d5db; border-radius: 12px; outline: none; background: #fff; font-size: 16px; }
-    input[readonly] { background: #f9fafb; }
-    input:focus, select:focus { border-color: #2563eb; box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12); }
-    .field-error { border-color: #dc2626 !important; box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.12) !important; }
-    .inline-error { font-size: 12px; color: #b91c1c; margin-top: 4px; font-weight: 600; }
-    .section-title { font-size: 14px; font-weight: 700; color: #111827; margin: 4px 0 2px; }
-    .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
-    .btn { border: none; padding: 12px 18px; border-radius: 12px; cursor: pointer; font-weight: 600; }
-    .btn-primary { background: #2563eb; color: white; }
-    .btn-secondary { background: #e5e7eb; color: #111827; }
-    .btn-success { background: #16a34a; color: white; }
-    .btn-warning { background: #f59e0b; color: white; }
-    .status { margin-top: 16px; padding: 14px 16px; border-radius: 12px; display: none; font-weight: 500; }
-    .status.show { display: block; }
-    .status.info { background: #dbeafe; color: #1d4ed8; }
-    .status.success { background: #dcfce7; color: #166534; }
-    .status.error { background: #fee2e2; color: #991b1b; }
-    .note { font-size: 13px; color: #6b7280; margin-top: 6px; }
-    .hidden { display: none !important; }
-    .photo-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 8px; align-items: start; }
-    .crop-area, .preview-area, .current-photo-area { background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 16px; padding: 16px; }
-    .crop-box { width: 100%; min-height: 320px; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 12px; background: #e5e7eb; text-align: center; color: #6b7280; padding: 10px; }
-    .crop-box img { max-width: 100%; display: block; }
-    .preview-box, .current-photo-box { width: 220px; height: 280px; border: 2px dashed #cbd5e1; border-radius: 14px; overflow: hidden; background: white; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
-    .preview-box img, .current-photo-box img { width: 100%; height: 100%; object-fit: cover; }
-    .spinner { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.45); border-top-color: #fff; border-radius: 50%; display: inline-block; animation: spin .8s linear infinite; vertical-align: middle; margin-right: 8px; }
-    .badge { display: inline-block; padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; background: #e5e7eb; color: #374151; align-self: center; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    @media (max-width: 700px) {
-      .container { padding: 10px; }
-      .header { padding: 18px; }
-      .header h1 { font-size: 22px; }
-      .actions { flex-direction: column; }
-      .btn { width: 100%; }
-      .photo-wrap { grid-template-columns: 1fr; }
-      .preview-box, .current-photo-box { width: 100%; max-width: 240px; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Salary System</title>
+
+<style>
+body{margin:0;font-family:Arial;background:#f4f6fb;color:#0f172a}
+.top{background:#2563eb;color:#fff;padding:18px;border-radius:0 0 22px 22px}
+.wrap{max-width:980px;margin:16px auto;padding:0 12px}
+.card{background:#fff;border-radius:18px;box-shadow:0 4px 18px rgba(0,0,0,.08);padding:16px;margin-bottom:14px}
+label{font-size:13px;font-weight:bold;margin:10px 0 5px;display:block}
+input,select,button{width:100%;padding:12px;border:1px solid #dbe3ef;border-radius:12px;font-size:15px}
+button{border:0;background:#2563eb;color:#fff;font-weight:bold;margin-top:10px}
+.secondary{background:#64748b}
+.danger{background:#dc2626}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.msg{padding:10px;border-radius:12px;margin:10px 0;font-size:14px;display:none}
+.ok{display:block;background:#dcfce7;color:#166534}
+.err{display:block;background:#fee2e2;color:#991b1b}
+.muted{color:#64748b;font-size:13px}
+.emp{display:grid;grid-template-columns:1fr 95px;gap:10px;align-items:center;border-bottom:1px solid #e5e7eb;padding:10px 0}
+.hide{display:none}
+.row{display:flex;gap:10px}
+.row button{flex:1}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:8px;border-bottom:1px solid #e5e7eb;text-align:left}
+th{background:#f1f5f9}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.card{padding:14px}}
+</style>
 </head>
+
 <body>
-  <div class="container">
-    <div class="card">
-      <div class="header">
-        <h1>Indus Bright Future School System Admission Form 2026</h1>
+
+<div class="top">
+  <h1>Online Salary System</h1>
+  <p>Principal: Absent days only · Admin: Generate and approve salary</p>
+</div>
+
+<div class="wrap">
+
+<div class="card">
+<h2>Login / User</h2>
+
+<div class="grid">
+<div>
+<label>Email</label>
+<input id="email" type="email" placeholder="principal@gmail.com">
+</div>
+
+<div>
+<label>Year</label>
+<input id="year" type="number" value="2026">
+</div>
+
+<div>
+<label>Month</label>
+<select id="month">
+<option>JAN</option><option>FEB</option><option>MAR</option><option>APR</option>
+<option>MAY</option><option>JUN</option><option>JUL</option><option>AUG</option>
+<option>SEP</option><option>OCT</option><option>NOV</option><option>DEC</option>
+</select>
+</div>
+</div>
+
+<label>Campus / School</label>
+<input id="campus" placeholder="Hassan Turk">
+
+<button onclick="login()">Continue</button>
+
+<div id="msg" class="msg"></div>
+<div id="userInfo" class="muted"></div>
+</div>
+
+<div id="principalPanel" class="hide">
+
+<div class="card">
+<h2>Absent Days Entry</h2>
+<p class="muted">Principal صرف absent days ڀريندو.</p>
+<button onclick="loadEmployees()">Load Employees</button>
+<div id="employeeList"></div>
+<button onclick="saveAbsentDays()">Save Absent Days</button>
+</div>
+
+<div class="card">
+<h2>Add New Employee</h2>
+<p class="muted">نئون ملازم Employee_Master ۾ ويندو، approval کان پوءِ salary ۾ شامل ٿيندو.</p>
+
+<div class="grid">
+<div><label>Name</label><input id="newName"></div>
+<div><label>Basic Salary</label><input id="newBasic" type="number"></div>
+<div><label>Designation</label><input id="newDesignation"></div>
+<div><label>Bank Account Title</label><input id="newBankTitle"></div>
+<div><label>Bank Account No</label><input id="newBankNo"></div>
+<div><label>CNIC</label><input id="newCnic"></div>
+<div><label>Joining Date</label><input id="newJoining" type="date"></div>
+</div>
+
+<button class="secondary" onclick="addEmployee()">Add Employee</button>
+</div>
+
+</div>
+
+<div id="adminPanel" class="card hide">
+<h2>Admin Panel</h2>
+
+<div class="row">
+<button onclick="generateSalary()">Generate</button>
+<button class="secondary" onclick="viewSalary()">View</button>
+<button class="danger" onclick="approveSalary()">Approve</button>
+</div>
+
+<h3>Salary Rows</h3>
+<div style="overflow:auto">
+<table>
+<thead>
+<tr>
+<th>ID</th><th>Name</th><th>Basic</th><th>Absent</th><th>Net Pay</th><th>Status</th>
+</tr>
+</thead>
+<tbody id="salaryRows"></tbody>
+</table>
+</div>
+
+<h3>Pending Employees</h3>
+<button class="secondary" onclick="loadPending()">Load Pending</button>
+
+<div style="overflow:auto">
+<table>
+<thead>
+<tr>
+<th>ID</th><th>Name</th><th>Campus</th><th>Basic</th><th>Action</th>
+</tr>
+</thead>
+<tbody id="pendingRows"></tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+
+<script>
+const API_URL = "https://script.google.com/macros/s/AKfycbwCecxnUiwEf2euPigIHnu-g8ke_e3etQ2xdE4_NtbM2oqROcoiQIwbz1DLZKqVcunMXA/exec";
+
+let USER = null;
+let EMPLOYEES = [];
+
+function show(text, type="ok") {
+  let box = document.getElementById("msg");
+  box.className = "msg " + type;
+  box.textContent = text;
+}
+
+async function api(action, payload = {}) {
+  let response = await fetch(API_URL, {
+    method: "POST",
+    body: JSON.stringify({ action, ...payload })
+  });
+
+  let text = await response.text();
+  let data = JSON.parse(text);
+
+  if (!data.ok) {
+    throw new Error(data.error || "Unknown error");
+  }
+
+  return data;
+}
+
+function filters() {
+  return {
+    email: document.getElementById("email").value.trim(),
+    year: Number(document.getElementById("year").value),
+    month: document.getElementById("month").value,
+    campus: document.getElementById("campus").value.trim()
+  };
+}
+
+async function login() {
+  try {
+    let data = await api("login", filters());
+
+    USER = data.user;
+
+    document.getElementById("userInfo").textContent =
+      USER.email + " | " + USER.role + " | " + (USER.campus || "All");
+
+    document.getElementById("principalPanel").classList.remove("hide");
+
+    if (USER.role === "ADMIN") {
+      document.getElementById("adminPanel").classList.remove("hide");
+    }
+
+    if (USER.role === "PRINCIPAL" && USER.campus) {
+      document.getElementById("campus").value = USER.campus;
+    }
+
+    show("Login successful");
+  } catch (err) {
+    show(err.message, "err");
+  }
+}
+
+async function loadEmployees() {
+  try {
+    let data = await api("getEmployees", filters());
+    EMPLOYEES = data.employees || [];
+
+    document.getElementById("employeeList").innerHTML = EMPLOYEES.map(e => `
+      <div class="emp">
+        <div>
+          <b>${e.Employee_Name}</b><br>
+          <small>${e.Employee_ID} · Basic: ${e.Basic_Salary}</small>
+        </div>
+        <input class="abs" data-id="${e.Employee_ID}" type="number" min="0" value="0">
       </div>
+    `).join("");
 
-      <div class="panel">
-        <div class="global-card">
-          <div class="section-title">Select School</div>
-          <div class="grid">
-            <div class="field">
-              <label for="globalSchoolCode">School Code</label>
-              <select id="globalSchoolCode">
-                <option value="">Select School Code</option>
-                <option>222</option>
-                <option>4179</option>
-                <option>3489</option>
-                <option>11268</option>
-                <option>11289</option>
-                <option>102981</option>
-                <option>103058</option>
-                <option>103699</option>
-                <option>103700</option>
-                <option>803188</option>
-                <option>803189</option>
-                <option>803190</option>
-                <option>803192</option>
-                <option>803193</option>
-                <option>805170</option>
-              </select>
-            </div>
-          </div>
-          <div class="actions">
-            <button type="button" class="btn btn-success" id="newAdmissionBtn">New Admission</button>
-            <button type="button" class="btn btn-primary" id="openSearchBtn">Search Existing Record</button>
-            <span class="badge" id="modeBadge">Idle</span>
-          </div>
-        </div>
-      </div>
+    show("Loaded " + EMPLOYEES.length + " employees");
+  } catch (err) {
+    show(err.message, "err");
+  }
+}
 
-      <div class="panel hidden" id="searchPanel">
-        <div class="search-card">
-          <div class="section-title">Search Existing Record</div>
-          <div class="grid">
-            <div class="field">
-              <label for="searchGrNo">GR No</label>
-              <input id="searchGrNo" inputmode="numeric" />
-            </div>
-          </div>
-          <div class="actions">
-            <button type="button" class="btn btn-primary" id="searchBtn">Search Record</button>
-            <button type="button" class="btn btn-secondary" id="closeSearchBtn">Close Search</button>
-          </div>
-          <div id="searchStatus" class="note"></div>
-        </div>
-      </div>
+async function saveAbsentDays() {
+  try {
+    let f = filters();
 
-      <form id="admissionForm" novalidate class="hidden">
-        <input type="hidden" id="mode" value="create" />
-        <input type="hidden" id="originalSchoolCode" value="" />
-        <input type="hidden" id="originalGrNo" value="" />
-        <input type="hidden" id="existingPhotoUrl" value="" />
+    let entries = EMPLOYEES.map(e => ({
+      employeeId: e.Employee_ID,
+      employeeName: e.Employee_Name,
+      absentDays: document.querySelector(`.abs[data-id="${e.Employee_ID}"]`).value
+    }));
 
-        <div class="panel">
-          <div id="stepIndicator" class="note" style="font-size:15px;font-weight:600;margin-bottom:8px;">Step 1 of 3 - Student Info</div>
-          <div style="width:100%;height:10px;background:#e5e7eb;border-radius:999px;overflow:hidden;">
-            <div id="progressBar" style="width:33.33%;height:100%;background:#2563eb;transition:width .25s ease;"></div>
-          </div>
-        </div>
+    let data = await api("saveAbsentDays", { ...f, entries });
 
-        <div class="panel" id="step1">
-          <div class="grid">
-            <div class="section-title">Student Information</div>
-            <div class="field"><label for="schoolCode">School Code</label><input id="schoolCode" name="schoolCode" readonly /></div>
-            <div class="field"><label for="grNo">GR No</label><input id="grNo" name="grNo" required inputmode="numeric" /></div>
-            <div class="field"><label for="studentName">Student Name</label><input id="studentName" name="studentName" required /></div>
-            <div class="field"><label for="surnameCast">Surname/Cast</label><input id="surnameCast" name="surnameCast" /></div>
-            <div class="field"><label for="gender">Gender</label><select id="gender" name="gender" required><option value="">Select Gender</option><option>Male</option><option>Female</option></select></div>
-            <div class="field"><label for="dob">Date of Birth</label><input id="dob" name="dob" type="date" required /></div>
-            <div class="field"><label for="birthPlace">Birth Place</label><input id="birthPlace" name="birthPlace" /></div>
-            <div class="field"><label for="religion">Religion</label><input id="religion" name="religion" /></div>
-          </div>
-        </div>
+    show("Saved " + data.saved + " entries");
+  } catch (err) {
+    show(err.message, "err");
+  }
+}
 
-        <div class="panel hidden" id="step2">
-          <div class="grid">
-            <div class="section-title">Admission Information</div>
-            <div class="field"><label for="admitClass">Admit in Class</label><select id="admitClass" name="admitClass" required><option value="">Select Class</option><option>Kachi</option><option>I</option><option>II</option><option>III</option><option>IV</option><option>V</option><option>VI</option><option>VII</option><option>VIII</option></select></div>
-            <div class="field"><label for="currentClass">Current Class</label><select id="currentClass" name="currentClass" required><option value="">Select Class</option><option>Kachi</option><option>I</option><option>II</option><option>III</option><option>IV</option><option>V</option><option>VI</option><option>VII</option><option>VIII</option></select></div>
-            <div class="field"><label for="dateOfAdmission">Date of Admission</label><input id="dateOfAdmission" name="dateOfAdmission" type="date" required /></div>
-            <div class="field"><label for="shift">Shift</label><select id="shift" name="shift" required><option value="">Select Shift</option><option>Morning</option><option>Afternoon</option><option>Evening</option></select></div>
-            <div class="field"><label for="bFormNo">B Form No</label><input id="bFormNo" name="bFormNo" inputmode="numeric" maxlength="13" /><div class="note">13 digits required</div></div>
-          </div>
-        </div>
-
-        <div class="panel hidden" id="step3">
-          <div class="grid">
-            <div class="section-title">Parent Information & Photo</div>
-            <div class="field"><label for="fatherName">Father Name</label><input id="fatherName" name="fatherName" required /></div>
-            <div class="field"><label for="fatherCnic">Father CNIC No</label><input id="fatherCnic" name="fatherCnic" inputmode="numeric" maxlength="13" /><div class="note">13 digits required</div></div>
-            <div class="field"><label for="motherName">Mother Name</label><input id="motherName" name="motherName" /></div>
-            <div class="field"><label for="motherCnic">Mother CNIC No</label><input id="motherCnic" name="motherCnic" inputmode="numeric" maxlength="13" /><div class="note">13 digits required</div></div>
-            <div class="field"><label for="parentsCnic">Parents CNIC No</label><input id="parentsCnic" name="parentsCnic" inputmode="numeric" maxlength="13" /><div class="note">13 digits required</div></div>
-            <div class="field"><label for="parentContact">Parent Contact Number</label><input id="parentContact" name="parentContact" inputmode="numeric" maxlength="11" required /><div class="note">11 digits required</div></div>
-
-            <div class="current-photo-area">
-              <strong>Current Photo</strong>
-              <div class="current-photo-box" style="margin-top:12px;">
-                <img id="existingPhotoPreview" class="hidden" alt="Current photo" />
-                <span id="existingPhotoPlaceholder">No existing photo loaded</span>
-              </div>
-              <div class="note">Update mode ۾ نئين upload سان photo replace ٿيندي.</div>
-            </div>
-
-            <div class="field">
-              <label for="photoInput">New Student Photo</label>
-              <input id="photoInput" type="file" accept="image/*" />
-              <div class="note">New Admission ۾ لازمي. Update ۾ optional.</div>
-            </div>
-
-            <div class="photo-wrap">
-              <div class="crop-area">
-                <strong>Crop Area</strong>
-                <div class="crop-box" style="margin-top:12px;">
-                  <img id="imageToCrop" class="hidden" alt="Photo to crop" />
-                  <span id="cropPlaceholder">Selected photo will appear here</span>
-                </div>
-                <div class="actions">
-                  <button type="button" class="btn btn-secondary" id="rotateLeft">Rotate Left</button>
-                  <button type="button" class="btn btn-secondary" id="rotateRight">Rotate Right</button>
-                  <button type="button" class="btn btn-primary" id="cropBtn">Apply Crop</button>
-                </div>
-              </div>
-              <div class="preview-area">
-                <strong>New Photo Preview</strong>
-                <div class="preview-box" style="margin-top:12px;">
-                  <img id="croppedPreview" class="hidden" alt="Cropped preview" />
-                  <span id="previewPlaceholder">No new cropped image yet</span>
-                </div>
-                <div class="note">Photo GR No.jpg نالي سان save ٿيندي.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel">
-          <div class="actions">
-            <button type="button" class="btn btn-secondary" id="backBtn" style="display:none;">Back</button>
-            <button type="button" class="btn btn-primary" id="nextBtn">Next</button>
-            <button type="submit" class="btn btn-success" id="submitBtn" style="display:none;">Submit Admission</button>
-            <button type="button" class="btn btn-warning hidden" id="updateBtn">Update Record</button>
-            <button type="button" class="btn btn-secondary" id="resetBtn">Reset Form</button>
-          </div>
-          <div id="statusBox" class="status info"></div>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
-  <script>
-    const APPS_SCRIPT_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzkja68kzTrywDKPXwlIXpLnlTqI9fGO9IaEtMqpTzfhEBwYypO-6CUArDJ7GACUE-QFg/exec';
-
-    const form = document.getElementById('admissionForm');
-    const globalSchoolCode = document.getElementById('globalSchoolCode');
-    const searchPanel = document.getElementById('searchPanel');
-    const searchBtn = document.getElementById('searchBtn');
-    const closeSearchBtn = document.getElementById('closeSearchBtn');
-    const openSearchBtn = document.getElementById('openSearchBtn');
-    const newAdmissionBtn = document.getElementById('newAdmissionBtn');
-    const modeBadge = document.getElementById('modeBadge');
-    const searchStatus = document.getElementById('searchStatus');
-
-    const photoInput = document.getElementById('photoInput');
-    const imageToCrop = document.getElementById('imageToCrop');
-    const cropPlaceholder = document.getElementById('cropPlaceholder');
-    const croppedPreview = document.getElementById('croppedPreview');
-    const previewPlaceholder = document.getElementById('previewPlaceholder');
-    const existingPhotoPreview = document.getElementById('existingPhotoPreview');
-    const existingPhotoPlaceholder = document.getElementById('existingPhotoPlaceholder');
-    const statusBox = document.getElementById('statusBox');
-    const submitBtn = document.getElementById('submitBtn');
-    const updateBtn = document.getElementById('updateBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const backBtn = document.getElementById('backBtn');
-    const resetBtn = document.getElementById('resetBtn');
-
-    let cropper = null;
-    let croppedImageBase64 = '';
-    let croppedMimeType = 'image/jpeg';
-    let currentStep = 1;
-
-    function digitsOnly(value) { return (value || '').toString().replace(/\D/g, ''); }
-
-    ['searchGrNo', 'grNo', 'bFormNo', 'fatherCnic', 'motherCnic', 'parentsCnic', 'parentContact'].forEach((id) => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      el.addEventListener('input', () => {
-        const limit = el.maxLength && el.maxLength > 0 ? Number(el.maxLength) : 50;
-        el.value = digitsOnly(el.value).slice(0, limit);
-      });
+async function addEmployee() {
+  try {
+    let data = await api("addEmployee", {
+      ...filters(),
+      employeeName: document.getElementById("newName").value.trim(),
+      basicSalary: document.getElementById("newBasic").value,
+      designation: document.getElementById("newDesignation").value,
+      bankAccountTitle: document.getElementById("newBankTitle").value,
+      bankAccountNo: document.getElementById("newBankNo").value,
+      cnic: document.getElementById("newCnic").value,
+      joiningDate: document.getElementById("newJoining").value
     });
 
-    function clearInlineErrors() {
-      form.querySelectorAll('.field-error').forEach((el) => el.classList.remove('field-error'));
-      form.querySelectorAll('.inline-error').forEach((el) => el.remove());
-    }
+    show("Employee added: " + data.employeeId + " (" + data.approvalStatus + ")");
+  } catch (err) {
+    show(err.message, "err");
+  }
+}
 
-    function setInlineError(el, message) {
-      if (!el) return;
-      el.classList.add('field-error');
-      const next = el.nextElementSibling;
-      if (next && next.classList && next.classList.contains('inline-error')) { next.textContent = message; return; }
-      const error = document.createElement('div');
-      error.className = 'inline-error';
-      error.textContent = message;
-      el.insertAdjacentElement('afterend', error);
-    }
+async function generateSalary() {
+  try {
+    let data = await api("generateSalary", filters());
+    show("Generated " + data.generated + " rows");
+    viewSalary();
+  } catch (err) {
+    show(err.message, "err");
+  }
+}
 
-    function showStatus(message, type = 'info') { statusBox.textContent = message; statusBox.className = `status show ${type}`; }
-    function hideStatus() { statusBox.className = 'status info'; statusBox.textContent = ''; clearInlineErrors(); }
+async function viewSalary() {
+  try {
+    let data = await api("getSalaryRows", filters());
 
-    function setMode(mode) {
-      document.getElementById('mode').value = mode;
-      const isUpdate = mode === 'update';
-      submitBtn.classList.toggle('hidden', isUpdate);
-      updateBtn.classList.toggle('hidden', !isUpdate);
-      modeBadge.textContent = isUpdate ? 'Update Mode' : mode === 'create' ? 'New Admission' : 'Idle';
-      showStep(currentStep);
-    }
+    document.getElementById("salaryRows").innerHTML = (data.rows || []).map(r => `
+      <tr>
+        <td>${r.Employee_ID}</td>
+        <td>${r.Employee_Name}</td>
+        <td>${r.Basic_Salary}</td>
+        <td>${r.Absent_Days}</td>
+        <td>${r.Net_Pay}</td>
+        <td>${r.Status}</td>
+      </tr>
+    `).join("");
 
-    function resetPhotoUI() {
-      if (cropper) { cropper.destroy(); cropper = null; }
-      imageToCrop.src = '';
-      imageToCrop.classList.add('hidden');
-      cropPlaceholder.classList.remove('hidden');
-      croppedPreview.src = '';
-      croppedPreview.classList.add('hidden');
-      previewPlaceholder.classList.remove('hidden');
-      croppedImageBase64 = '';
-      croppedMimeType = 'image/jpeg';
-      photoInput.value = '';
-    }
+    show("Loaded " + data.rows.length + " salary rows");
+  } catch (err) {
+    show(err.message, "err");
+  }
+}
 
-    function setExistingPhoto(url) {
-      document.getElementById('existingPhotoUrl').value = url || '';
-      if (url) {
-        existingPhotoPreview.src = url;
-        existingPhotoPreview.classList.remove('hidden');
-        existingPhotoPlaceholder.classList.add('hidden');
-      } else {
-        existingPhotoPreview.src = '';
-        existingPhotoPreview.classList.add('hidden');
-        existingPhotoPlaceholder.classList.remove('hidden');
-      }
-    }
-
-    function getStepFields(step) {
-      if (step === 1) return ['schoolCode', 'grNo', 'studentName', 'gender', 'dob'];
-      if (step === 2) return ['admitClass', 'currentClass', 'dateOfAdmission', 'shift'];
-      return ['fatherName', 'parentContact'];
-    }
-
-    function validateStep(step) {
-      clearInlineErrors();
-      const fields = getStepFields(step);
-      for (const id of fields) {
-        const el = document.getElementById(id);
-        if (!el) continue;
-        if (['grNo', 'bFormNo', 'fatherCnic', 'motherCnic', 'parentsCnic', 'parentContact'].includes(id)) el.value = digitsOnly(el.value);
-        if (id === 'parentContact') {
-          const phone = digitsOnly(el.value);
-          if (!/^\d{11}$/.test(phone)) { setInlineError(el, 'Phone number must be exactly 11 digits.'); el.focus(); showStatus('Please complete the required fields correctly before continuing.', 'error'); return false; }
-          continue;
-        }
-        if (id === 'grNo') {
-          const gr = digitsOnly(el.value);
-          if (!gr) { setInlineError(el, 'GR No is required.'); el.focus(); showStatus('Please complete the required fields correctly before continuing.', 'error'); return false; }
-          continue;
-        }
-        if (!el.checkValidity()) { setInlineError(el, 'This field is required.'); el.focus(); showStatus('Please complete the required fields correctly before continuing.', 'error'); return false; }
-      }
-      const optional13DigitFields = ['bFormNo', 'fatherCnic', 'motherCnic', 'parentsCnic'];
-      for (const id of optional13DigitFields) {
-        const el = document.getElementById(id);
-        if (!el) continue;
-        const value = digitsOnly(el.value);
-        if (value && value.length !== 13) { setInlineError(el, 'This value must be exactly 13 digits.'); el.focus(); showStatus('Please complete the required fields correctly before continuing.', 'error'); return false; }
-      }
-      if (step === 3 && document.getElementById('mode').value === 'create' && !croppedImageBase64) { showStatus('Please upload and crop the student photo before submitting.', 'error'); return false; }
-      hideStatus();
-      return true;
-    }
-
-    function focusFirstField(step) {
-      const fields = getStepFields(step);
-      for (const id of fields) {
-        const el = document.getElementById(id);
-        if (el) { setTimeout(() => el.focus(), 50); break; }
-      }
-    }
-
-    function showStep(step) {
-      document.getElementById('step1').classList.toggle('hidden', step !== 1);
-      document.getElementById('step2').classList.toggle('hidden', step !== 2);
-      document.getElementById('step3').classList.toggle('hidden', step !== 3);
-      backBtn.style.display = step === 1 ? 'none' : 'inline-block';
-      nextBtn.style.display = step === 3 ? 'none' : 'inline-block';
-      const isUpdate = document.getElementById('mode').value === 'update';
-      submitBtn.style.display = step === 3 && !isUpdate ? 'inline-block' : 'none';
-      updateBtn.style.display = step === 3 && isUpdate ? 'inline-block' : 'none';
-      const indicator = document.getElementById('stepIndicator');
-      if (step === 1) indicator.innerText = 'Step 1 of 3 - Student Info';
-      if (step === 2) indicator.innerText = 'Step 2 of 3 - Admission Info';
-      if (step === 3) indicator.innerText = 'Step 3 of 3 - Parent Info & Photo';
-      document.getElementById('progressBar').style.width = step === 1 ? '33.33%' : step === 2 ? '66.66%' : '100%';
-      focusFirstField(step);
-    }
-
-    function setFormVisible(visible) { form.classList.toggle('hidden', !visible); }
-
-    function clearFormForNew() {
-      form.reset();
-      document.getElementById('schoolCode').value = globalSchoolCode.value || '';
-      document.getElementById('originalSchoolCode').value = '';
-      document.getElementById('originalGrNo').value = '';
-      document.getElementById('searchGrNo').value = '';
-      setExistingPhoto('');
-      resetPhotoUI();
-      currentStep = 1;
-      setMode('create');
-      setFormVisible(true);
-      showStep(1);
-      hideStatus();
-      searchStatus.textContent = '';
-    }
-
-    function fillForm(record) {
-      document.getElementById('schoolCode').value = record.schoolCode || '';
-      globalSchoolCode.value = record.schoolCode || '';
-      document.getElementById('grNo').value = record.grNo || '';
-      document.getElementById('studentName').value = record.studentName || '';
-      document.getElementById('surnameCast').value = record.surnameCast || '';
-      document.getElementById('bFormNo').value = record.bFormNo || '';
-      document.getElementById('fatherName').value = record.fatherName || '';
-      document.getElementById('fatherCnic').value = record.fatherCnic || '';
-      document.getElementById('motherName').value = record.motherName || '';
-      document.getElementById('motherCnic').value = record.motherCnic || '';
-      document.getElementById('gender').value = record.gender || '';
-      document.getElementById('dob').value = record.dob || '';
-      document.getElementById('admitClass').value = record.admitClass || '';
-      document.getElementById('parentsCnic').value = record.parentsCnic || '';
-      document.getElementById('currentClass').value = record.currentClass || '';
-      document.getElementById('religion').value = record.religion || '';
-      document.getElementById('birthPlace').value = record.birthPlace || '';
-      document.getElementById('parentContact').value = record.parentContact || '';
-      document.getElementById('dateOfAdmission').value = record.dateOfAdmission || '';
-      document.getElementById('shift').value = record.shift || '';
-      document.getElementById('originalSchoolCode').value = record.schoolCode || '';
-      document.getElementById('originalGrNo').value = record.grNo || '';
-      setExistingPhoto(record.studentPhoto || '');
-      resetPhotoUI();
-      currentStep = 1;
-      setMode('update');
-      setFormVisible(true);
-      showStep(1);
-    }
-
-    async function compressImageBeforeCrop(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const img = new Image();
-          img.onload = () => {
-            const maxWidth = 1000;
-            const scale = Math.min(1, maxWidth / img.width);
-            const canvas = document.createElement('canvas');
-            canvas.width = Math.round(img.width * scale);
-            canvas.height = Math.round(img.height * scale);
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            resolve(canvas.toDataURL('image/jpeg', 0.8));
-          };
-          img.onerror = reject;
-          img.src = e.target.result;
-        };
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
-    }
-
-    async function postToScript(payload) {
-      const response = await fetch(APPS_SCRIPT_WEB_APP_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(payload)
-      });
-      return response.json();
-    }
-
-    async function searchRecord() {
-      const schoolCode = (globalSchoolCode.value || '').trim();
-      const grNo = digitsOnly(document.getElementById('searchGrNo').value);
-      if (!schoolCode || !grNo) { searchStatus.textContent = 'Enter School Code and GR No first.'; return; }
-      searchStatus.textContent = 'Searching...';
-      try {
-        const result = await postToScript({ action: 'search', schoolCode, grNo });
-        if (!result.success) throw new Error(result.message || 'Record not found.');
-        fillForm(result.record);
-        searchStatus.textContent = 'Record loaded. You can now edit and update it.';
-        showStatus('Record loaded successfully.', 'success');
-      } catch (error) {
-        searchStatus.textContent = error.message || 'Record not found.';
-        showStatus(error.message || 'Record not found.', 'error');
-      }
-    }
-
-    function collectPayload(action) {
-      return {
-        action,
-        schoolCode: (document.getElementById('schoolCode').value || '').trim(),
-        grNo: digitsOnly(document.getElementById('grNo').value || ''),
-        studentName: (document.getElementById('studentName').value || '').trim(),
-        surnameCast: (document.getElementById('surnameCast').value || '').trim(),
-        bFormNo: digitsOnly(document.getElementById('bFormNo').value || ''),
-        fatherName: (document.getElementById('fatherName').value || '').trim(),
-        fatherCnic: digitsOnly(document.getElementById('fatherCnic').value || ''),
-        motherName: (document.getElementById('motherName').value || '').trim(),
-        motherCnic: digitsOnly(document.getElementById('motherCnic').value || ''),
-        gender: document.getElementById('gender').value || '',
-        dob: document.getElementById('dob').value || '',
-        admitClass: document.getElementById('admitClass').value || '',
-        parentsCnic: digitsOnly(document.getElementById('parentsCnic').value || ''),
-        currentClass: document.getElementById('currentClass').value || '',
-        religion: (document.getElementById('religion').value || '').trim(),
-        birthPlace: (document.getElementById('birthPlace').value || '').trim(),
-        parentContact: digitsOnly(document.getElementById('parentContact').value || ''),
-        dateOfAdmission: document.getElementById('dateOfAdmission').value || '',
-        shift: document.getElementById('shift').value || '',
-        studentPhotoBase64: croppedImageBase64,
-        studentPhotoMimeType: croppedMimeType,
-        existingPhotoUrl: document.getElementById('existingPhotoUrl').value || '',
-        originalSchoolCode: document.getElementById('originalSchoolCode').value || '',
-        originalGrNo: document.getElementById('originalGrNo').value || ''
-      };
-    }
-
-    async function submitAction(action) {
-      if (!validateStep(3)) return;
-      if (action === 'update' && !document.getElementById('originalSchoolCode').value) { showStatus('Search and load a record first.', 'error'); return; }
-      const button = action === 'update' ? updateBtn : submitBtn;
-      const label = action === 'update' ? 'Updating...' : 'Submitting...';
-      const payload = collectPayload(action);
-      try {
-        button.disabled = true;
-        button.innerHTML = `<span class="spinner"></span>${label}`;
-        showStatus(action === 'update' ? 'Updating record...' : 'Submitting admission data...', 'info');
-        const result = await postToScript(payload);
-        if (!result.success) throw new Error(result.message || (action === 'update' ? 'Update failed.' : 'Submission failed.'));
-        showStatus(result.message || (action === 'update' ? 'Record updated successfully.' : 'Admission submitted successfully.'), 'success');
-        if (action === 'update') {
-          if (result.studentPhoto) setExistingPhoto(result.studentPhoto);
-          document.getElementById('originalSchoolCode').value = payload.schoolCode;
-          document.getElementById('originalGrNo').value = payload.grNo;
-          resetPhotoUI();
-        } else {
-          clearFormForNew();
-          showStatus('Admission submitted successfully.', 'success');
-        }
-      } catch (error) {
-        showStatus(error.message || 'Something went wrong.', 'error');
-      } finally {
-        button.disabled = false;
-        button.textContent = action === 'update' ? 'Update Record' : 'Submit Admission';
-      }
-    }
-
-    function nextStep() { if (!validateStep(currentStep)) return; if (currentStep < 3) { currentStep++; showStep(currentStep); } }
-    function prevStep() { if (currentStep > 1) { currentStep--; showStep(currentStep); } }
-
-    globalSchoolCode.addEventListener('change', () => { document.getElementById('schoolCode').value = globalSchoolCode.value || ''; });
-    newAdmissionBtn.addEventListener('click', () => {
-      if (!globalSchoolCode.value) { showStatus('Please select School Code first.', 'error'); return; }
-      searchPanel.classList.add('hidden');
-      clearFormForNew();
-      setMode('create');
-      showStatus('New Admission mode opened.', 'info');
-    });
-    openSearchBtn.addEventListener('click', () => {
-      if (!globalSchoolCode.value) { showStatus('Please select School Code first.', 'error'); return; }
-      setFormVisible(false);
-      searchPanel.classList.remove('hidden');
-      document.getElementById('searchGrNo').value = '';
-      searchStatus.textContent = '';
-      modeBadge.textContent = 'Search Mode';
-      hideStatus();
-    });
-    closeSearchBtn.addEventListener('click', () => {
-      searchPanel.classList.add('hidden');
-      searchStatus.textContent = '';
-      if (!form.classList.contains('hidden')) modeBadge.textContent = document.getElementById('mode').value === 'update' ? 'Update Mode' : 'New Admission';
-      else modeBadge.textContent = 'Idle';
-    });
-    searchBtn.addEventListener('click', searchRecord);
-    nextBtn.addEventListener('click', nextStep);
-    backBtn.addEventListener('click', prevStep);
-
-    photoInput.addEventListener('change', async (event) => {
-      const file = event.target.files?.[0];
-      if (!file) return;
-      try {
-        showStatus('Preparing image...', 'info');
-        const dataURL = await compressImageBeforeCrop(file);
-        imageToCrop.src = dataURL;
-        imageToCrop.classList.remove('hidden');
-        cropPlaceholder.classList.add('hidden');
-        if (cropper) cropper.destroy();
-        cropper = new Cropper(imageToCrop, { aspectRatio: 3 / 4, viewMode: 1, autoCropArea: 1, responsive: true, background: false });
-        croppedImageBase64 = '';
-        croppedPreview.classList.add('hidden');
-        previewPlaceholder.classList.remove('hidden');
-        showStatus('Photo loaded. Adjust crop and click Apply Crop.', 'info');
-      } catch (error) {
-        showStatus('Failed to load image.', 'error');
-      }
-    });
-    document.getElementById('rotateLeft').addEventListener('click', () => { if (cropper) cropper.rotate(-90); });
-    document.getElementById('rotateRight').addEventListener('click', () => { if (cropper) cropper.rotate(90); });
-    document.getElementById('cropBtn').addEventListener('click', () => {
-      if (!cropper) { showStatus('Please upload a photo first.', 'error'); return; }
-      const canvas = cropper.getCroppedCanvas({ width: 300, height: 400, imageSmoothingQuality: 'high' });
-      croppedImageBase64 = canvas.toDataURL('image/jpeg', 0.7);
-      croppedMimeType = 'image/jpeg';
-      croppedPreview.src = croppedImageBase64;
-      croppedPreview.classList.remove('hidden');
-      previewPlaceholder.classList.add('hidden');
-      showStatus('Crop applied successfully.', 'success');
+async function approveSalary() {
+  try {
+    let data = await api("approveSalary", {
+      ...filters(),
+      remarks: "Approved from GitHub"
     });
 
-    form.addEventListener('submit', async (event) => { event.preventDefault(); await submitAction('create'); });
-    updateBtn.addEventListener('click', async () => { await submitAction('update'); });
-    resetBtn.addEventListener('click', () => { clearFormForNew(); showStatus('Form reset.', 'info'); });
-    document.addEventListener('DOMContentLoaded', () => { searchPanel.classList.add('hidden'); setFormVisible(false); modeBadge.textContent = 'Idle'; hideStatus(); });
-  </script>
+    show("Approved " + data.approved + " rows");
+  } catch (err) {
+    show(err.message, "err");
+  }
+}
+
+async function loadPending() {
+  try {
+    let data = await api("getPendingEmployees", filters());
+
+    document.getElementById("pendingRows").innerHTML = (data.rows || []).map(r => `
+      <tr>
+        <td>${r.Employee_ID}</td>
+        <td>${r.Employee_Name}</td>
+        <td>${r.Campus}</td>
+        <td>${r.Basic_Salary}</td>
+        <td><button onclick="approveEmployee('${r.Employee_ID}')">Approve</button></td>
+      </tr>
+    `).join("");
+  } catch (err) {
+    show(err.message, "err");
+  }
+}
+
+async function approveEmployee(id) {
+  try {
+    let data = await api("approveNewEmployee", {
+      ...filters(),
+      employeeId: id
+    });
+
+    show("Approved " + data.employeeId);
+    loadPending();
+  } catch (err) {
+    show(err.message, "err");
+  }
+}
+</script>
+
 </body>
 </html>
