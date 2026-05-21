@@ -1,78 +1,388 @@
 <!doctype html>
 <html lang="sd" dir="ltr">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>IBFSS Salary System Login</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IBFSS Salary - سادو ۽ تيز</title>
 <style>
-:root{--brand:#0f766e;--bg:#f3f6f8;--card:#fff;--muted:#64748b;--line:#e2e8f0;--danger:#b91c1c}*{box-sizing:border-box}body{margin:0;font-family:Arial,'Noto Sans Arabic',sans-serif;background:var(--bg);color:#0f172a}.wrap{max-width:1200px;margin:auto;padding:12px}.card{background:var(--card);border-radius:18px;padding:16px;margin:12px 0;box-shadow:0 10px 30px rgba(15,23,42,.06)}h1{margin:0;font-size:30px}.top{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}.tabs{display:flex;gap:8px;overflow-x:auto;padding:3px}.tab,button{border:0;border-radius:12px;padding:11px 14px;font-weight:700;background:#e2e8f0;color:#0f172a;cursor:pointer;white-space:nowrap}.tab.active,button.primary{background:var(--brand);color:white}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}label{display:block;font-size:13px;font-weight:700;margin-bottom:5px}input,select,textarea{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:white}textarea{min-height:120px}.muted{color:var(--muted);font-size:13px}.ok{color:#047857;font-weight:700}.err{color:var(--danger);font-weight:700}.stat{border:1px solid var(--line);background:#f8fafc;border-radius:14px;padding:13px}.stat b{display:block;font-size:24px;margin-top:6px}.tableWrap{overflow:auto}table{border-collapse:collapse;width:100%;background:white}th,td{border-bottom:1px solid var(--line);padding:8px;text-align:left;font-size:13px;white-space:nowrap}th{background:#f1f5f9;position:sticky;top:0}.hide{display:none}.loginBox{max-width:460px;margin:40px auto}.logout{background:#fee2e2;color:#991b1b}.smallBtn{padding:9px 11px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}@media(max-width:650px){.wrap{padding:8px}.card{border-radius:14px;padding:12px}h1{font-size:24px}.grid{grid-template-columns:1fr}.tab,button{width:auto;padding:10px 12px}th,td{font-size:12px;padding:7px}}
+  *{box-sizing:border-box}
+  body{font-family:Arial,sans-serif;background:#f0f2f5;margin:0;padding:16px}
+  .card{background:white;border-radius:20px;padding:20px;margin-bottom:20px;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
+  input,select,textarea{width:100%;padding:10px;margin:6px 0;border:1px solid #ccc;border-radius:12px}
+  button{background:#0f766e;color:white;border:none;padding:10px 18px;border-radius:30px;font-weight:bold;cursor:pointer}
+  button:hover{background:#0d5c56}
+  .error{color:#b91c1c;font-weight:bold}
+  .success{color:#15803d}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+  table{width:100%;border-collapse:collapse}
+  th,td{border-bottom:1px solid #ddd;padding:8px;text-align:left}
+  .hide{display:none}
+  .login-box{max-width:450px;margin:50px auto}
 </style>
 </head>
 <body>
-<div id="loginScreen" class="wrap hide">
-  <div class="card loginBox">
-    <h1>IBFSS Salary Login</h1>
-    <p class="muted">Email ۽ PIN سان login ڪريو.</p>
+
+<!-- LOGIN SCREEN -->
+<div id="loginScreen">
+  <div class="card login-box">
+    <h2>🏫 IBFSS Salary Login</h2>
+    <p class="muted">Email ۽ PIN سان لاگ ان ڪريو (ڊيفالٽ PIN: 1234)</p>
     <div class="grid">
-      <div><label>Email</label><input id="loginEmail" type="email" placeholder="your@email.com"></div>
-      <div><label>PIN</label><input id="loginPin" type="password" inputmode="numeric" placeholder="PIN"></div>
-      <div><label>API URL</label><input id="loginApi" placeholder="Apps Script Web App URL"></div>
+      <div><label>Email</label><input type="email" id="loginEmail" placeholder="imtiaz.samoo@gmail.com"></div>
+      <div><label>PIN</label><input type="password" id="loginPin" placeholder="1234"></div>
+      <div><label>API URL (Web App)</label><input type="text" id="loginApi" placeholder="https://script.google.com/.../exec"></div>
     </div>
-    <div class="actions"><button class="primary" onclick="doLogin()">Login</button><button onclick="testLoginApi()">Test API</button></div>
+    <div style="margin-top:15px">
+      <button onclick="testApi()">📡 Test API</button>
+      <button onclick="doLogin()" style="background:#0f766e">🔐 Login</button>
+    </div>
     <p id="loginMsg" class="muted"></p>
-    <p class="muted">پهريون دفعو PIN: 1234. پوءِ Users sheet ۾ PIN تبديل ڪريو.</p>
+    <hr>
+    <details>
+      <summary>⚙️ پھرئين دفعو استعمال ڪرڻ لاءِ هدايت</summary>
+      <p>1. پهرين پنهنجو Apps Script Web App URL مٿي "API URL" ۾ داخل ڪريو ۽ "Test API" دٻايو.<br>
+      2. جيڪڏهن "API OK" نٿو اچي ته پڪ ڪريو تہ Web App "Execute as Me" ۽ "Access Anyone" تي سيٽ آهي.<br>
+      3. لاگ ان کان پوءِ توهان کي مڪمل نظام نظر ايندو.</p>
+    </details>
   </div>
 </div>
-<div id="appRoot" class="wrap hide">
- <div class="card top"><div><h1>IBFSS Salary System <span class="muted">FINAL LOGIN</span></h1><div id="user" class="muted">Loading...</div></div><div class="tabs" id="tabs"></div><button class="logout smallBtn" onclick="logout()">Logout</button></div>
- <div class="card"><div class="grid"><div><label>Year</label><input id="year" type="number"></div><div><label>Month</label><select id="month"></select></div><div><label>Campus</label><input id="campus" placeholder="Campus name"></div><div><label>API URL</label><input id="api" placeholder="Apps Script Web App URL"></div></div><div class="actions"><button class="primary" onclick="saveApi();refresh()">Refresh</button><button onclick="ping()">Test API</button></div><p id="msg" class="muted"></p></div>
- <div id="view"></div>
-</div>
-<script>
-const DEFAULT_API='PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
-let state={tab:'Dashboard',months:['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'],employees:[],salary:[],bank:[],dashboard:{}};
-const SESSION_KEY='ibfss_session_token';
-const USER_KEY='ibfss_session_user';
-const LAST_KEY='ibfss_last_activity';
-const IDLE_LIMIT_MS=30*60*1000;
-const tabNames=['Dashboard','Employees','Attendance','Advance / Petty / Deduction','Salary Grid','Bank'];
-function $(id){return document.getElementById(id)}
-function money(n){return Number(n||0).toLocaleString('en-US')}
-function setMsg(t,err){$('msg').textContent=t||'';$('msg').className=err?'err':'ok'}
-function params(){return {year:+$('year').value,month:$('month').value,campus:$('campus').value.trim()}}
-function saveApi(){localStorage.ibfss_api=$('api').value.trim(); if($('loginApi'))$('loginApi').value=$('api').value.trim()}
-function apiUrl(){return ($('api').value||localStorage.ibfss_api||DEFAULT_API).trim()}
-function token(){return sessionStorage.getItem(SESSION_KEY)||''}
-function currentUser(){try{return JSON.parse(sessionStorage.getItem(USER_KEY)||'{}')}catch(e){return {}}}
-function touch(){sessionStorage.setItem(LAST_KEY,String(Date.now()))}
-function isIdleExpired(){const last=Number(sessionStorage.getItem(LAST_KEY)||0);return last && Date.now()-last>IDLE_LIMIT_MS}
-function jsonp(action,payload={}){return new Promise((res,rej)=>{if(action!=='login'&&action!=='ping')payload.token=token(); const cb='cb_'+Date.now()+'_'+Math.floor(Math.random()*9999); window[cb]=r=>{delete window[cb];s.remove(); if(r&&r.ok){if(action!=='ping')touch(); res(r.data)}else rej(new Error(r.error||'API error'))}; const url=apiUrl()+'?action='+encodeURIComponent(action)+'&callback='+cb+'&payload='+encodeURIComponent(JSON.stringify(payload)); const s=document.createElement('script'); s.src=url; s.onerror=()=>{delete window[cb];rej(new Error('API not reachable. Check Web App URL / deployment.'))}; document.body.appendChild(s);});}
-async function init(){ $('api').value=localStorage.ibfss_api||DEFAULT_API; $('loginApi').value=localStorage.ibfss_api||DEFAULT_API; $('loginEmail').value=localStorage.ibfss_email||''; $('year').value=new Date().getFullYear(); state.months.forEach(m=>$('month').insertAdjacentHTML('beforeend',`<option>${m}</option>`)); tabs.innerHTML=tabNames.map(t=>`<button class="tab ${t===state.tab?'active':''}" onclick="state.tab='${t}';render()">${t}</button>`).join(''); if(!token()||isIdleExpired()){showLogin('Please login');return;} try{showApp(); await ping(false); await refresh();}catch(e){logout('Session expired. Please login again');} }
-async function ping(show=true){try{const c=await jsonp('context'); $('user').textContent=(c.email||'')+' | '+(c.role||'ADMIN')+' | '+(c.version||''); if(show)setMsg('API connected')}catch(e){setMsg(e.message,true); if(String(e.message).includes('login')||String(e.message).includes('Session'))logout(e.message)}}
-function showLogin(t){$('appRoot').classList.add('hide');$('loginScreen').classList.remove('hide');$('loginMsg').textContent=t||''}
-function showApp(){$('loginScreen').classList.add('hide');$('appRoot').classList.remove('hide')}
-async function testLoginApi(){try{localStorage.ibfss_api=$('loginApi').value.trim();$('api').value=$('loginApi').value.trim();const p=await jsonp('ping');$('loginMsg').textContent='API OK: '+(p.version||'');$('loginMsg').className='ok'}catch(e){$('loginMsg').textContent=e.message;$('loginMsg').className='err'}}
-async function doLogin(){try{localStorage.ibfss_api=$('loginApi').value.trim();localStorage.ibfss_email=$('loginEmail').value.trim();$('api').value=$('loginApi').value.trim();const r=await jsonp('login',{email:$('loginEmail').value.trim(),pin:$('loginPin').value.trim()});sessionStorage.setItem(SESSION_KEY,r.token);sessionStorage.setItem(USER_KEY,JSON.stringify(r.user));touch();showApp();$('user').textContent=(r.user.email||'')+' | '+(r.user.role||'')+' | '+(r.version||'');await refresh()}catch(e){$('loginMsg').textContent=e.message;$('loginMsg').className='err'}}
-function logout(message){sessionStorage.removeItem(SESSION_KEY);sessionStorage.removeItem(USER_KEY);sessionStorage.removeItem(LAST_KEY);state.employees=[];state.salary=[];state.bank=[];state.dashboard={};showLogin(message||'Logged out')}
-['click','keydown','touchstart'].forEach(ev=>document.addEventListener(ev,()=>{if(token())touch()},{passive:true}));
-setInterval(()=>{if(token()&&isIdleExpired())logout('30 minutes inactive. Please login again')},60000);
 
-async function refresh(){try{saveApi(); const p=params(); const [e,s,b,d]=await Promise.all([jsonp('employees',{campus:p.campus}),jsonp('salaryRows',p),jsonp('bankRows',p),jsonp('dashboard',p)]); state.employees=e;state.salary=s;state.bank=b;state.dashboard=d;setMsg('Data refreshed');render();}catch(e){setMsg(e.message,true)}}
-function render(){tabs.innerHTML=tabNames.map(t=>`<button class="tab ${t===state.tab?'active':''}" onclick="state.tab='${t}';render()">${t}</button>`).join(''); if(state.tab==='Dashboard')return dashboard(); if(state.tab==='Employees')return employees(); if(state.tab==='Attendance')return attendance(); if(state.tab==='Advance / Petty / Deduction')return apd(); if(state.tab==='Salary Grid')return salaryGrid(); if(state.tab==='Bank')return bank();}
-function dashboard(){const d=state.dashboard||{}; const items=[['Employees',d.employees],['Salary Rows',d.salaryRows],['Generated',d.generated],['Approved',d.approved],['Basic Total',d.basicTotal],['Absent Deduction',d.absentDeduction],['Installment',d.installment],['Manual Deduction',d.manualDeduction],['Petty Cash',d.pettyCash],['Salary Net Pay',d.salaryNetPay],['Account Wise Total',d.accountTotal],['Bank Rows',d.bankRows]]; view.innerHTML=`<div class="card"><h2>Dashboard Summary</h2><div class="grid">${items.map(x=>`<div class="stat"><span>${x[0]}</span><b>${money(x[1])}</b></div>`).join('')}</div></div>`}
-function employees(){view.innerHTML=`<div class="card"><h2>Add Employee</h2><div class="grid"><div><label>Name</label><input id="en"></div><div><label>Campus</label><input id="ec" value="${$('campus').value}"></div><div><label>School Code</label><input id="esc"></div><div><label>Basic Salary</label><input id="eb" type="number"></div><div><label>Bank Title</label><input id="eat"></div><div><label>Bank No</label><input id="ean"></div><div><label>CNIC</label><input id="ecnic"></div><div><label>Designation</label><input id="edes"></div></div><div class="actions"><button class="primary" onclick="addEmp()">Save Employee</button><button onclick="refresh()">Load Employees</button></div></div><div class="card"><h2>Employees</h2>${table(state.employees,['Employee_ID','Employee_Name','Campus','School_Code','Basic_Salary','Bank_Account_Title','Bank_Account_No','CNIC','Payment_Remarks'])}</div>`}
-async function addEmp(){try{const p={employeeName:en.value,campus:ec.value,schoolCode:esc.value,basicSalary:eb.value,bankAccountTitle:eat.value,bankAccountNo:ean.value,cnic:ecnic.value,designation:edes.value}; const r=await jsonp('addEmployee',p); setMsg('Employee saved: '+r.employeeId+' '+(r.warnings||[]).join(', ')); await refresh();}catch(e){setMsg(e.message,true)}}
-function attendance(){view.innerHTML=`<div class="card"><h2>Bulk Attendance</h2><p class="muted">Paste rows: Employee_ID, Employee_Name, School_Code, Absent_Days</p><textarea id="attText" placeholder="230101018-001, Ali, 230101018, 3"></textarea><div class="actions"><button class="primary" onclick="saveAtt()">Save Attendance</button></div></div>`}
-async function saveAtt(){try{const entries=parseLines(attText.value,['employeeId','employeeName','schoolCode','absentDays']); const r=await jsonp('attendance',{...params(),entries}); setMsg('Attendance saved: '+r.saved); await refresh();}catch(e){setMsg(e.message,true)}}
-function apd(){view.innerHTML=`<div class="card"><h2>Advance / Petty / Deduction</h2><div class="grid"><div><label>Type</label><select id="apdtype"><option value="advance">Advance</option><option value="petty">Petty Cash</option><option value="deduction">Manual Deduction</option></select></div></div><p class="muted">Advance: Employee_ID, Name, Advance_Add, Installment, Remarks<br>Petty: Employee_ID, Name, Amount, Details<br>Deduction: Employee_ID, Name, Amount, Remarks</p><textarea id="apdText"></textarea><div class="actions"><button class="primary" onclick="saveAPD()">Save</button></div></div>`}
-async function saveAPD(){try{let type=apdtype.value, entries=[]; if(type==='advance')entries=parseLines(apdText.value,['employeeId','employeeName','advanceAdd','installment','remarks']); if(type==='petty')entries=parseLines(apdText.value,['employeeId','employeeName','amount','details']); if(type==='deduction')entries=parseLines(apdText.value,['employeeId','employeeName','amount','remarks']); const action=type==='advance'?'advance':type==='petty'?'petty':'deduction'; const r=await jsonp(action,{...params(),entries}); setMsg('Saved: '+r.saved); await refresh();}catch(e){setMsg(e.message,true)}}
-function salaryGrid(){view.innerHTML=`<div class="card"><h2>Salary Grid</h2><div class="actions"><button class="primary" onclick="genSal()">Generate Salary</button><button onclick="approveSal()">Approve / Lock</button><button onclick="refresh()">Load Salary</button></div></div><div class="card tableWrap">${table(state.salary,['Employee_ID','Employee_Name','School_Code','Basic_Salary','Absent_Days','Deductible_Absent_Days','Absent_Deduction','Advance_Add','Installment','Remaining_Advance','Manual_Deduction','Petty_Cash_Amount','Salary_Net_Pay','Account_Wise_Total','Status'])}</div>`}
-async function genSal(){try{const r=await jsonp('salaryGenerate',params()); setMsg('Generated: '+r.generated); await refresh();}catch(e){setMsg(e.message,true)}}
-async function approveSal(){try{if(!confirm('Lock/approve salary?'))return; const r=await jsonp('salaryApprove',{...params(),remarks:'Approved from mobile frontend'}); setMsg('Approved: '+r.approved); await refresh();}catch(e){setMsg(e.message,true)}}
-function bank(){view.innerHTML=`<div class="card"><h2>Bank Summary</h2><div class="actions"><button onclick="refresh()">Load Bank</button><button onclick="downloadCSV()">Download CSV</button></div></div><div class="card tableWrap">${table(state.bank,['Employee_ID','Employee_Name','Bank_Account_Title','Bank_Account_No','Salary_Net_Pay','Petty_Cash_Amount','Account_Wise_Total','Details'])}</div>`}
-function table(rows,cols){if(!rows||!rows.length)return '<p class="muted">No rows found.</p>'; return `<div class="tableWrap"><table><thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${cols.map(c=>`<td>${r[c]??''}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`}
-function parseLines(text,keys){return text.split(/\n+/).map(x=>x.trim()).filter(Boolean).map(line=>{const p=line.split(/\t|,/).map(x=>x.trim()); const o={}; keys.forEach((k,i)=>o[k]=p[i]||''); return o;});}
-function downloadCSV(){const rows=state.bank||[]; if(!rows.length)return setMsg('No bank rows',true); const cols=Object.keys(rows[0]); const csv=[cols.join(',')].concat(rows.map(r=>cols.map(c=>'"'+String(r[c]??'').replace(/"/g,'""')+'"').join(','))).join('\n'); const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'})); a.download='bank_summary.csv'; a.click();}
-init();
+<!-- MAIN APP -->
+<div id="appRoot" class="hide">
+  <div class="card" style="display:flex; justify-content:space-between; align-items:center">
+    <h2>💰 IBFSS Salary System <span style="font-size:14px">(Easy Version)</span></h2>
+    <button onclick="logout()">🚪 Logout</button>
+  </div>
+  <div class="card">
+    <div class="grid">
+      <div><label>Year</label><input type="number" id="year" value="2026"></div>
+      <div><label>Month</label><select id="month"><option>JAN</option><option>FEB</option><option>MAR</option><option>APR</option><option>MAY</option><option>JUN</option><option>JUL</option><option>AUG</option><option>SEP</option><option>OCT</option><option>NOV</option><option>DEC</option></select></div>
+      <div><label>Campus</label><input id="campus" placeholder="Campus name" value="Main"></div>
+      <div><label>API URL</label><input id="api" placeholder="Web App URL"></div>
+    </div>
+    <div><button onclick="refreshAll()">🔄 Refresh Data</button> <span id="statusMsg"></span></div>
+  </div>
+  <div class="card">
+    <div id="tabs" style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:15px">
+      <button onclick="showTab('dashboard')">📊 Dashboard</button>
+      <button onclick="showTab('employees')">👥 Employees</button>
+      <button onclick="showTab('attendance')">📋 Attendance</button>
+      <button onclick="showTab('apd')">💰 Advance/Petty/Ded</button>
+      <button onclick="showTab('salary')">📄 Salary Grid</button>
+      <button onclick="showTab('bank')">🏦 Bank Export</button>
+    </div>
+    <div id="view">Loading...</div>
+  </div>
+</div>
+
+<script>
+// ---------- GLOBALS ----------
+let activeTab = 'dashboard';
+let appData = { employees: [], salary: [], bank: [], dashboard: {}, empOptions: [] };
+let currentToken = null;
+
+const STORAGE_TOKEN = 'ibfss_token';
+const STORAGE_USER = 'ibfss_user';
+const DEFAULT_API = '';  // user must enter
+
+// Helper functions
+function $(id) { return document.getElementById(id); }
+function apiUrl() { return ($('#api')?.value || $('#loginApi')?.value || localStorage.getItem('ibfss_api') || '').trim(); }
+function saveApiToLocal() { let u = apiUrl(); if(u) localStorage.setItem('ibfss_api', u); }
+function setMsg(el, txt, isErr) { let m = $(el); if(m) { m.innerText = txt; m.className = isErr ? 'error' : 'success'; } }
+function showLogin(msg) { $('#loginScreen').classList.remove('hide'); $('#appRoot').classList.add('hide'); if(msg) setMsg('loginMsg', msg, true); }
+function showApp() { $('#loginScreen').classList.add('hide'); $('#appRoot').classList.remove('hide'); }
+
+// JSONP call with timeout
+function jsonp(action, payload = {}) {
+  return new Promise((resolve, reject) => {
+    if (action !== 'login' && action !== 'ping' && currentToken) payload.token = currentToken;
+    let cbName = 'cb_' + Date.now() + '_' + Math.random().toString(36).substr(2);
+    let timeout = setTimeout(() => { cleanup(); reject(new Error('Request timeout')); }, 15000);
+    window[cbName] = (resp) => {
+      cleanup();
+      if (resp && resp.ok) resolve(resp.data);
+      else reject(new Error(resp?.error || 'API error'));
+    };
+    let url = apiUrl() + '?action=' + encodeURIComponent(action) + '&callback=' + cbName + '&payload=' + encodeURIComponent(JSON.stringify(payload));
+    let script = document.createElement('script');
+    script.src = url;
+    script.onerror = () => { cleanup(); reject(new Error('Network error - check API URL')); };
+    document.body.appendChild(script);
+    function cleanup() {
+      clearTimeout(timeout);
+      if (script.parentNode) script.parentNode.removeChild(script);
+      delete window[cbName];
+    }
+  });
+}
+
+// Test API connection
+async function testApi() {
+  let url = $('#loginApi').value.trim();
+  if (!url) { setMsg('loginMsg', 'Please enter API URL', true); return; }
+  localStorage.setItem('ibfss_api', url);
+  $('#api').value = url;
+  setMsg('loginMsg', 'Testing...');
+  try {
+    let res = await jsonp('ping');
+    setMsg('loginMsg', '✅ API connected! Version: ' + (res.version || 'OK'), false);
+  } catch(e) {
+    setMsg('loginMsg', '❌ Failed: ' + e.message, true);
+  }
+}
+
+// Login
+async function doLogin() {
+  let email = $('#loginEmail').value.trim();
+  let pin = $('#loginPin').value.trim();
+  let api = $('#loginApi').value.trim();
+  if (!api) { setMsg('loginMsg', 'API URL required', true); return; }
+  localStorage.setItem('ibfss_api', api);
+  $('#api').value = api;
+  setMsg('loginMsg', 'Logging in...');
+  try {
+    let data = await jsonp('login', { email, pin });
+    currentToken = data.token;
+    sessionStorage.setItem(STORAGE_TOKEN, currentToken);
+    sessionStorage.setItem(STORAGE_USER, JSON.stringify(data.user));
+    showApp();
+    await refreshAll();
+  } catch(e) {
+    setMsg('loginMsg', 'Login error: ' + e.message, true);
+  }
+}
+
+function logout() {
+  currentToken = null;
+  sessionStorage.removeItem(STORAGE_TOKEN);
+  sessionStorage.removeItem(STORAGE_USER);
+  showLogin('Logged out successfully');
+}
+
+// Refresh all data using combined endpoint
+async function refreshAll() {
+  if (!currentToken) {
+    let t = sessionStorage.getItem(STORAGE_TOKEN);
+    if (t) currentToken = t;
+    else { logout(); return; }
+  }
+  saveApiToLocal();
+  let y = $('#year').value;
+  let m = $('#month').value;
+  let c = $('#campus').value.trim();
+  setMsg('statusMsg', 'Loading...', false);
+  try {
+    let full = await jsonp('getFullData', { year: y, month: m, campus: c });
+    appData = full;
+    currentToken = currentToken; // keep
+    setMsg('statusMsg', `✅ Loaded ${full.employees?.length || 0} employees, ${full.salary?.length || 0} salary records`, false);
+    renderCurrentTab();
+  } catch(e) {
+    setMsg('statusMsg', 'Error: ' + e.message, true);
+    if (e.message.includes('Session') || e.message.includes('login')) logout();
+  }
+}
+
+// Tab switching
+function showTab(tab) {
+  activeTab = tab;
+  renderCurrentTab();
+}
+function renderCurrentTab() {
+  if (activeTab === 'dashboard') renderDashboard();
+  else if (activeTab === 'employees') renderEmployees();
+  else if (activeTab === 'attendance') renderAttendance();
+  else if (activeTab === 'apd') renderAPD();
+  else if (activeTab === 'salary') renderSalary();
+  else if (activeTab === 'bank') renderBank();
+}
+
+// Dashboard
+function renderDashboard() {
+  let d = appData.dashboard || {};
+  let html = `<h3>📈 Dashboard Summary</h3><div class="grid">`;
+  html += `<div><strong>Employees</strong><br>${d.employees || 0}</div>`;
+  html += `<div><strong>Salary Rows</strong><br>${d.salaryRows || 0}</div>`;
+  html += `<div><strong>Generated</strong><br>${d.generated || 0}</div>`;
+  html += `<div><strong>Approved</strong><br>${d.approved || 0}</div>`;
+  html += `<div><strong>Net Pay Total</strong><br>${Number(d.salaryNetPay || 0).toLocaleString()}</div>`;
+  html += `<div><strong>Account Total</strong><br>${Number(d.accountTotal || 0).toLocaleString()}</div>`;
+  html += `</div>`;
+  $('#view').innerHTML = html;
+}
+
+// Employees list + add form
+function renderEmployees() {
+  let list = appData.employees || [];
+  let rows = list.map(e => `<tr><td>${e.Employee_ID}</td><td>${e.Employee_Name}</td><td>${e.Campus}</td><td>${e.School_Code}</td><td>${Number(e.Basic_Salary).toLocaleString()}</td></tr>`).join('');
+  let html = `
+    <h3>➕ Add Employee</h3>
+    <div class="grid">
+      <input id="empName" placeholder="Full Name">
+      <input id="empCampus" placeholder="Campus" value="${$('#campus').value}">
+      <input id="empSchoolCode" placeholder="School Code">
+      <input id="empBasic" type="number" placeholder="Basic Salary">
+      <input id="empBankTitle" placeholder="Bank Title">
+      <input id="empBankNo" placeholder="Bank Account No">
+      <input id="empCnic" placeholder="CNIC">
+      <input id="empDesignation" placeholder="Designation">
+    </div>
+    <button onclick="addEmployee()">Save Employee</button>
+    <hr>
+    <h3>📋 Employee List</h3>
+    <div style="overflow-x:auto"><table><thead><tr><th>ID</th><th>Name</th><th>Campus</th><th>School Code</th><th>Basic Salary</th></tr></thead><tbody>${rows || '<tr><td colspan="5">No employees</td></tr>'}</tbody></table></div>
+  `;
+  $('#view').innerHTML = html;
+}
+
+async function addEmployee() {
+  let payload = {
+    employeeName: $('#empName').value,
+    campus: $('#empCampus').value,
+    schoolCode: $('#empSchoolCode').value,
+    basicSalary: $('#empBasic').value,
+    bankAccountTitle: $('#empBankTitle').value,
+    bankAccountNo: $('#empBankNo').value,
+    cnic: $('#empCnic').value,
+    designation: $('#empDesignation').value
+  };
+  try {
+    let res = await jsonp('addEmployee', payload);
+    setMsg('statusMsg', `Saved: ${res.employeeId}`, false);
+    await refreshAll();
+  } catch(e) { setMsg('statusMsg', e.message, true); }
+}
+
+// Attendance (simple)
+function renderAttendance() {
+  let html = `
+    <h3>📆 Attendance Entry</h3>
+    <p>Enter Employee_ID and Absent Days (one per line, comma separated)</p>
+    <textarea id="attRows" rows="5" placeholder="Example:&#10;230101018-001,3&#10;230101018-002,1"></textarea>
+    <button onclick="saveAttendance()">Save Attendance</button>
+  `;
+  $('#view').innerHTML = html;
+}
+
+async function saveAttendance() {
+  let text = $('#attRows').value;
+  let entries = text.split(/\n/).filter(l=>l.trim()).map(line=>{
+    let parts = line.split(/,/).map(p=>p.trim());
+    return { employeeId: parts[0], absentDays: parts[1] || 0, employeeName: '', schoolCode: '' };
+  });
+  if(!entries.length) { setMsg('statusMsg','No data',true); return; }
+  try {
+    let y = $('#year').value, m = $('#month').value, c = $('#campus').value;
+    let res = await jsonp('attendance', { year: y, month: m, campus: c, entries });
+    setMsg('statusMsg', `Saved ${res.saved} records`, false);
+    await refreshAll();
+  } catch(e) { setMsg('statusMsg', e.message, true); }
+}
+
+// Advance/Petty/Deduction
+function renderAPD() {
+  let html = `
+    <h3>💰 Advance / Petty Cash / Deduction</h3>
+    <select id="apdType">
+      <option value="advance">Advance</option>
+      <option value="petty">Petty Cash</option>
+      <option value="deduction">Deduction</option>
+    </select>
+    <textarea id="apdRows" rows="5" placeholder="Format: Employee_ID, Amount, Remarks (or for advance: Employee_ID, AdvanceAdd, Installment, Remarks)"></textarea>
+    <button onclick="saveAPD()">Save</button>
+  `;
+  $('#view').innerHTML = html;
+}
+
+async function saveAPD() {
+  let type = $('#apdType').value;
+  let text = $('#apdRows').value;
+  let entries = text.split(/\n/).filter(l=>l.trim()).map(line=>{
+    let parts = line.split(/,/).map(p=>p.trim());
+    if(type==='advance') return { employeeId: parts[0], advanceAdd: parts[1]||0, installment: parts[2]||0, remarks: parts[3]||'' };
+    else return { employeeId: parts[0], amount: parts[1]||0, remarks: parts[2]||'' };
+  });
+  if(!entries.length) { setMsg('statusMsg','No data',true); return; }
+  let action = type;
+  try {
+    let p = { year: $('#year').value, month: $('#month').value, campus: $('#campus').value, entries };
+    let res = await jsonp(action, p);
+    setMsg('statusMsg', `Saved ${res.saved} records`, false);
+    await refreshAll();
+  } catch(e) { setMsg('statusMsg', e.message, true); }
+}
+
+// Salary Grid
+function renderSalary() {
+  let rows = appData.salary || [];
+  let tableRows = rows.map(s => `<tr><td>${s.Employee_ID}</td><td>${s.Employee_Name}</td><td>${Number(s.Basic_Salary).toLocaleString()}</td><td>${s.Absent_Days||0}</td><td>${Number(s.Absent_Deduction||0).toLocaleString()}</td><td>${Number(s.Salary_Net_Pay||0).toLocaleString()}</td><td>${s.Status||''}</td></tr>`).join('');
+  let html = `
+    <div style="display:flex; gap:10px; margin-bottom:15px">
+      <button onclick="generateSalary()">⚙️ Generate Salary</button>
+      <button onclick="approveSalary()" style="background:#b91c1c">🔒 Approve & Lock</button>
+    </div>
+    <div style="overflow-x:auto"><table><thead><tr><th>ID</th><th>Name</th><th>Basic</th><th>Absent</th><th>Abs.Ded</th><th>Net Pay</th><th>Status</th></tr></thead><tbody>${tableRows || '<tr><td colspan="7">No salary data</td></tr>'}</tbody></table></div>
+  `;
+  $('#view').innerHTML = html;
+}
+
+async function generateSalary() {
+  if(!confirm('Generate salary for current month?')) return;
+  try {
+    let res = await jsonp('salaryGenerate', { year: $('#year').value, month: $('#month').value, campus: $('#campus').value });
+    setMsg('statusMsg', `Generated ${res.generated} records`, false);
+    await refreshAll();
+  } catch(e) { setMsg('statusMsg', e.message, true); }
+}
+async function approveSalary() {
+  if(!confirm('Approve and lock salary?')) return;
+  try {
+    let res = await jsonp('salaryApprove', { year: $('#year').value, month: $('#month').value, campus: $('#campus').value, remarks: 'Approved' });
+    setMsg('statusMsg', `Approved ${res.approved} records`, false);
+    await refreshAll();
+  } catch(e) { setMsg('statusMsg', e.message, true); }
+}
+
+// Bank Export
+function renderBank() {
+  let rows = appData.bank || [];
+  let tableRows = rows.map(b => `<tr><td>${b.Employee_ID}</td><td>${b.Employee_Name}</td><td>${b.Bank_Account_Title||''}</td><td>${b.Bank_Account_No||''}</td><td>${Number(b.Salary_Net_Pay||0).toLocaleString()}</td><td>${Number(b.Petty_Cash_Amount||0).toLocaleString()}</td><td>${Number(b.Account_Wise_Total||0).toLocaleString()}</td></tr>`).join('');
+  let html = `
+    <button onclick="downloadBankCSV()">📥 Download CSV</button>
+    <div style="overflow-x:auto"><table><thead><tr><th>ID</th><th>Name</th><th>Bank Title</th><th>Account No</th><th>Net Pay</th><th>Petty</th><th>Total</th></tr></thead><tbody>${tableRows || '<tr><td colspan="7">No bank data</td></tr>'}</tbody></table></div>
+  `;
+  $('#view').innerHTML = html;
+}
+function downloadBankCSV() {
+  let rows = appData.bank || [];
+  if(!rows.length) { setMsg('statusMsg','No bank data',true); return; }
+  let headers = Object.keys(rows[0]);
+  let csv = [headers.join(',')];
+  rows.forEach(r => csv.push(headers.map(h => '"' + (r[h]||'').replace(/"/g,'""') + '"').join(',')));
+  let blob = new Blob([csv.join('\n')], {type:'text/csv'});
+  let a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `bank_${$('#year').value}_${$('#month').value}.csv`;
+  a.click();
+}
+
+// Auto restore token on page load
+window.onload = () => {
+  let savedToken = sessionStorage.getItem(STORAGE_TOKEN);
+  let savedApi = localStorage.getItem('ibfss_api');
+  if(savedApi) {
+    $('#loginApi').value = savedApi;
+    $('#api').value = savedApi;
+  }
+  if(savedToken) {
+    currentToken = savedToken;
+    showApp();
+    refreshAll();
+  } else {
+    showLogin('');
+  }
+};
 </script>
 </body>
 </html>
