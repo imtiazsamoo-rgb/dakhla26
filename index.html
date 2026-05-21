@@ -1,342 +1,48 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="sd" dir="ltr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Online Salary System</title>
-
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>IBFSS Salary System</title>
 <style>
-body{margin:0;font-family:Arial;background:#f4f6fb;color:#0f172a}
-.top{background:#2563eb;color:#fff;padding:18px;border-radius:0 0 22px 22px}
-.wrap{max-width:980px;margin:16px auto;padding:0 12px}
-.card{background:#fff;border-radius:18px;box-shadow:0 4px 18px rgba(0,0,0,.08);padding:16px;margin-bottom:14px}
-label{font-size:13px;font-weight:bold;margin:10px 0 5px;display:block}
-input,select,button{width:100%;padding:12px;border:1px solid #dbe3ef;border-radius:12px;font-size:15px}
-button{border:0;background:#2563eb;color:#fff;font-weight:bold;margin-top:10px}
-.secondary{background:#64748b}
-.danger{background:#dc2626}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.msg{padding:10px;border-radius:12px;margin:10px 0;font-size:14px;display:none}
-.ok{display:block;background:#dcfce7;color:#166534}
-.err{display:block;background:#fee2e2;color:#991b1b}
-.muted{color:#64748b;font-size:13px}
-.emp{display:grid;grid-template-columns:1fr 95px;gap:10px;align-items:center;border-bottom:1px solid #e5e7eb;padding:10px 0}
-.hide{display:none}
-.row{display:flex;gap:10px}
-.row button{flex:1}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th,td{padding:8px;border-bottom:1px solid #e5e7eb;text-align:left}
-th{background:#f1f5f9}
-@media(max-width:760px){.grid{grid-template-columns:1fr}.card{padding:14px}}
+:root{--brand:#0f766e;--bg:#f3f6f8;--card:#fff;--muted:#64748b;--line:#e2e8f0;--danger:#b91c1c}*{box-sizing:border-box}body{margin:0;font-family:Arial,'Noto Sans Arabic',sans-serif;background:var(--bg);color:#0f172a}.wrap{max-width:1200px;margin:auto;padding:12px}.card{background:var(--card);border-radius:18px;padding:16px;margin:12px 0;box-shadow:0 10px 30px rgba(15,23,42,.06)}h1{margin:0;font-size:30px}.top{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}.tabs{display:flex;gap:8px;overflow-x:auto;padding:3px}.tab,button{border:0;border-radius:12px;padding:11px 14px;font-weight:700;background:#e2e8f0;color:#0f172a;cursor:pointer;white-space:nowrap}.tab.active,button.primary{background:var(--brand);color:white}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}label{display:block;font-size:13px;font-weight:700;margin-bottom:5px}input,select,textarea{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:white}textarea{min-height:120px}.muted{color:var(--muted);font-size:13px}.ok{color:#047857;font-weight:700}.err{color:var(--danger);font-weight:700}.stat{border:1px solid var(--line);background:#f8fafc;border-radius:14px;padding:13px}.stat b{display:block;font-size:24px;margin-top:6px}.tableWrap{overflow:auto}table{border-collapse:collapse;width:100%;background:white}th,td{border-bottom:1px solid var(--line);padding:8px;text-align:left;font-size:13px;white-space:nowrap}th{background:#f1f5f9;position:sticky;top:0}.hide{display:none}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}@media(max-width:650px){.wrap{padding:8px}.card{border-radius:14px;padding:12px}h1{font-size:24px}.grid{grid-template-columns:1fr}.tab,button{width:auto;padding:10px 12px}th,td{font-size:12px;padding:7px}}
 </style>
 </head>
-
 <body>
-
-<div class="top">
-  <h1>Online Salary System</h1>
-  <p>Principal: Absent days only · Admin: Generate and approve salary</p>
-</div>
-
 <div class="wrap">
-
-<div class="card">
-<h2>Login / User</h2>
-
-<div class="grid">
-<div>
-<label>Email</label>
-<input id="email" type="email" placeholder="principal@gmail.com">
+ <div class="card top"><div><h1>IBFSS Salary System <span class="muted">FINAL</span></h1><div id="user" class="muted">Loading...</div></div><div class="tabs" id="tabs"></div></div>
+ <div class="card"><div class="grid"><div><label>Year</label><input id="year" type="number"></div><div><label>Month</label><select id="month"></select></div><div><label>Campus</label><input id="campus" placeholder="Campus name"></div><div><label>API URL</label><input id="api" placeholder="Apps Script Web App URL"></div></div><div class="actions"><button class="primary" onclick="saveApi();refresh()">Refresh</button><button onclick="ping()">Test API</button></div><p id="msg" class="muted"></p></div>
+ <div id="view"></div>
 </div>
-
-<div>
-<label>Year</label>
-<input id="year" type="number" value="2026">
-</div>
-
-<div>
-<label>Month</label>
-<select id="month">
-<option>JAN</option><option>FEB</option><option>MAR</option><option>APR</option>
-<option>MAY</option><option>JUN</option><option>JUL</option><option>AUG</option>
-<option>SEP</option><option>OCT</option><option>NOV</option><option>DEC</option>
-</select>
-</div>
-</div>
-
-<label>Campus / School</label>
-<input id="campus" placeholder="Hassan Turk">
-
-<button onclick="login()">Continue</button>
-
-<div id="msg" class="msg"></div>
-<div id="userInfo" class="muted"></div>
-</div>
-
-<div id="principalPanel" class="hide">
-
-<div class="card">
-<h2>Absent Days Entry</h2>
-<p class="muted">Principal صرف absent days ڀريندو.</p>
-<button onclick="loadEmployees()">Load Employees</button>
-<div id="employeeList"></div>
-<button onclick="saveAbsentDays()">Save Absent Days</button>
-</div>
-
-<div class="card">
-<h2>Add New Employee</h2>
-<p class="muted">نئون ملازم Employee_Master ۾ ويندو، approval کان پوءِ salary ۾ شامل ٿيندو.</p>
-
-<div class="grid">
-<div><label>Name</label><input id="newName"></div>
-<div><label>Basic Salary</label><input id="newBasic" type="number"></div>
-<div><label>Designation</label><input id="newDesignation"></div>
-<div><label>Bank Account Title</label><input id="newBankTitle"></div>
-<div><label>Bank Account No</label><input id="newBankNo"></div>
-<div><label>CNIC</label><input id="newCnic"></div>
-<div><label>Joining Date</label><input id="newJoining" type="date"></div>
-</div>
-
-<button class="secondary" onclick="addEmployee()">Add Employee</button>
-</div>
-
-</div>
-
-<div id="adminPanel" class="card hide">
-<h2>Admin Panel</h2>
-
-<div class="row">
-<button onclick="generateSalary()">Generate</button>
-<button class="secondary" onclick="viewSalary()">View</button>
-<button class="danger" onclick="approveSalary()">Approve</button>
-</div>
-
-<h3>Salary Rows</h3>
-<div style="overflow:auto">
-<table>
-<thead>
-<tr>
-<th>ID</th><th>Name</th><th>Basic</th><th>Absent</th><th>Net Pay</th><th>Status</th>
-</tr>
-</thead>
-<tbody id="salaryRows"></tbody>
-</table>
-</div>
-
-<h3>Pending Employees</h3>
-<button class="secondary" onclick="loadPending()">Load Pending</button>
-
-<div style="overflow:auto">
-<table>
-<thead>
-<tr>
-<th>ID</th><th>Name</th><th>Campus</th><th>Basic</th><th>Action</th>
-</tr>
-</thead>
-<tbody id="pendingRows"></tbody>
-</table>
-</div>
-
-</div>
-
-</div>
-
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbwCecxnUiwEf2euPigIHnu-g8ke_e3etQ2xdE4_NtbM2oqROcoiQIwbz1DLZKqVcunMXA/exec";
-
-let USER = null;
-let EMPLOYEES = [];
-
-function show(text, type="ok") {
-  let box = document.getElementById("msg");
-  box.className = "msg " + type;
-  box.textContent = text;
-}
-
-async function api(action, payload = {}) {
-  let response = await fetch(API_URL, {
-    method: "POST",
-    body: JSON.stringify({ action, ...payload })
-  });
-
-  let text = await response.text();
-  let data = JSON.parse(text);
-
-  if (!data.ok) {
-    throw new Error(data.error || "Unknown error");
-  }
-
-  return data;
-}
-
-function filters() {
-  return {
-    email: document.getElementById("email").value.trim(),
-    year: Number(document.getElementById("year").value),
-    month: document.getElementById("month").value,
-    campus: document.getElementById("campus").value.trim()
-  };
-}
-
-async function login() {
-  try {
-    let data = await api("login", filters());
-
-    USER = data.user;
-
-    document.getElementById("userInfo").textContent =
-      USER.email + " | " + USER.role + " | " + (USER.campus || "All");
-
-    document.getElementById("principalPanel").classList.remove("hide");
-
-    if (USER.role === "ADMIN") {
-      document.getElementById("adminPanel").classList.remove("hide");
-    }
-
-    if (USER.role === "PRINCIPAL" && USER.campus) {
-      document.getElementById("campus").value = USER.campus;
-    }
-
-    show("Login successful");
-  } catch (err) {
-    show(err.message, "err");
-  }
-}
-
-async function loadEmployees() {
-  try {
-    let data = await api("getEmployees", filters());
-    EMPLOYEES = data.employees || [];
-
-    document.getElementById("employeeList").innerHTML = EMPLOYEES.map(e => `
-      <div class="emp">
-        <div>
-          <b>${e.Employee_Name}</b><br>
-          <small>${e.Employee_ID} · Basic: ${e.Basic_Salary}</small>
-        </div>
-        <input class="abs" data-id="${e.Employee_ID}" type="number" min="0" value="0">
-      </div>
-    `).join("");
-
-    show("Loaded " + EMPLOYEES.length + " employees");
-  } catch (err) {
-    show(err.message, "err");
-  }
-}
-
-async function saveAbsentDays() {
-  try {
-    let f = filters();
-
-    let entries = EMPLOYEES.map(e => ({
-      employeeId: e.Employee_ID,
-      employeeName: e.Employee_Name,
-      absentDays: document.querySelector(`.abs[data-id="${e.Employee_ID}"]`).value
-    }));
-
-    let data = await api("saveAbsentDays", { ...f, entries });
-
-    show("Saved " + data.saved + " entries");
-  } catch (err) {
-    show(err.message, "err");
-  }
-}
-
-async function addEmployee() {
-  try {
-    let data = await api("addEmployee", {
-      ...filters(),
-      employeeName: document.getElementById("newName").value.trim(),
-      basicSalary: document.getElementById("newBasic").value,
-      designation: document.getElementById("newDesignation").value,
-      bankAccountTitle: document.getElementById("newBankTitle").value,
-      bankAccountNo: document.getElementById("newBankNo").value,
-      cnic: document.getElementById("newCnic").value,
-      joiningDate: document.getElementById("newJoining").value
-    });
-
-    show("Employee added: " + data.employeeId + " (" + data.approvalStatus + ")");
-  } catch (err) {
-    show(err.message, "err");
-  }
-}
-
-async function generateSalary() {
-  try {
-    let data = await api("generateSalary", filters());
-    show("Generated " + data.generated + " rows");
-    viewSalary();
-  } catch (err) {
-    show(err.message, "err");
-  }
-}
-
-async function viewSalary() {
-  try {
-    let data = await api("getSalaryRows", filters());
-
-    document.getElementById("salaryRows").innerHTML = (data.rows || []).map(r => `
-      <tr>
-        <td>${r.Employee_ID}</td>
-        <td>${r.Employee_Name}</td>
-        <td>${r.Basic_Salary}</td>
-        <td>${r.Absent_Days}</td>
-        <td>${r.Net_Pay}</td>
-        <td>${r.Status}</td>
-      </tr>
-    `).join("");
-
-    show("Loaded " + data.rows.length + " salary rows");
-  } catch (err) {
-    show(err.message, "err");
-  }
-}
-
-async function approveSalary() {
-  try {
-    let data = await api("approveSalary", {
-      ...filters(),
-      remarks: "Approved from GitHub"
-    });
-
-    show("Approved " + data.approved + " rows");
-  } catch (err) {
-    show(err.message, "err");
-  }
-}
-
-async function loadPending() {
-  try {
-    let data = await api("getPendingEmployees", filters());
-
-    document.getElementById("pendingRows").innerHTML = (data.rows || []).map(r => `
-      <tr>
-        <td>${r.Employee_ID}</td>
-        <td>${r.Employee_Name}</td>
-        <td>${r.Campus}</td>
-        <td>${r.Basic_Salary}</td>
-        <td><button onclick="approveEmployee('${r.Employee_ID}')">Approve</button></td>
-      </tr>
-    `).join("");
-  } catch (err) {
-    show(err.message, "err");
-  }
-}
-
-async function approveEmployee(id) {
-  try {
-    let data = await api("approveNewEmployee", {
-      ...filters(),
-      employeeId: id
-    });
-
-    show("Approved " + data.employeeId);
-    loadPending();
-  } catch (err) {
-    show(err.message, "err");
-  }
-}
+const DEFAULT_API='https://script.google.com/macros/s/AKfycbxUiwgK0MF7S6OkW991sD2pRUAySL1R4ta56q3Hi945UdRpL68PvYWnT1CknIxXwqWFag/exec';
+let state={tab:'Dashboard',months:['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'],employees:[],salary:[],bank:[],dashboard:{}};
+const tabNames=['Dashboard','Employees','Attendance','Advance / Petty / Deduction','Salary Grid','Bank'];
+function $(id){return document.getElementById(id)}
+function money(n){return Number(n||0).toLocaleString('en-US')}
+function setMsg(t,err){$('msg').textContent=t||'';$('msg').className=err?'err':'ok'}
+function params(){return {year:+$('year').value,month:$('month').value,campus:$('campus').value.trim()}}
+function saveApi(){localStorage.ibfss_api=$('api').value.trim()}
+function apiUrl(){return ($('api').value||localStorage.ibfss_api||DEFAULT_API).trim()}
+function jsonp(action,payload={}){return new Promise((res,rej)=>{const cb='cb_'+Date.now()+'_'+Math.floor(Math.random()*9999); window[cb]=r=>{delete window[cb];s.remove();r&&r.ok?res(r.data):rej(new Error(r.error||'API error'))}; const url=apiUrl()+'?action='+encodeURIComponent(action)+'&callback='+cb+'&payload='+encodeURIComponent(JSON.stringify(payload)); const s=document.createElement('script'); s.src=url; s.onerror=()=>{delete window[cb];rej(new Error('API not reachable. Check Web App URL / deployment.'))}; document.body.appendChild(s);});}
+async function init(){ $('api').value=localStorage.ibfss_api||DEFAULT_API; $('year').value=new Date().getFullYear(); state.months.forEach(m=>$('month').insertAdjacentHTML('beforeend',`<option>${m}</option>`)); tabs.innerHTML=tabNames.map(t=>`<button class="tab ${t===state.tab?'active':''}" onclick="state.tab='${t}';render()">${t}</button>`).join(''); await ping(false); render(); }
+async function ping(show=true){try{const c=await jsonp('context'); $('user').textContent=(c.email||'')+' | '+(c.role||'ADMIN')+' | '+(c.version||''); if(show)setMsg('API connected')}catch(e){setMsg(e.message,true)}}
+async function refresh(){try{saveApi(); const p=params(); const [e,s,b,d]=await Promise.all([jsonp('employees',{campus:p.campus}),jsonp('salaryRows',p),jsonp('bankRows',p),jsonp('dashboard',p)]); state.employees=e;state.salary=s;state.bank=b;state.dashboard=d;setMsg('Data refreshed');render();}catch(e){setMsg(e.message,true)}}
+function render(){tabs.innerHTML=tabNames.map(t=>`<button class="tab ${t===state.tab?'active':''}" onclick="state.tab='${t}';render()">${t}</button>`).join(''); if(state.tab==='Dashboard')return dashboard(); if(state.tab==='Employees')return employees(); if(state.tab==='Attendance')return attendance(); if(state.tab==='Advance / Petty / Deduction')return apd(); if(state.tab==='Salary Grid')return salaryGrid(); if(state.tab==='Bank')return bank();}
+function dashboard(){const d=state.dashboard||{}; const items=[['Employees',d.employees],['Salary Rows',d.salaryRows],['Generated',d.generated],['Approved',d.approved],['Basic Total',d.basicTotal],['Absent Deduction',d.absentDeduction],['Installment',d.installment],['Manual Deduction',d.manualDeduction],['Petty Cash',d.pettyCash],['Salary Net Pay',d.salaryNetPay],['Account Wise Total',d.accountTotal],['Bank Rows',d.bankRows]]; view.innerHTML=`<div class="card"><h2>Dashboard Summary</h2><div class="grid">${items.map(x=>`<div class="stat"><span>${x[0]}</span><b>${money(x[1])}</b></div>`).join('')}</div></div>`}
+function employees(){view.innerHTML=`<div class="card"><h2>Add Employee</h2><div class="grid"><div><label>Name</label><input id="en"></div><div><label>Campus</label><input id="ec" value="${$('campus').value}"></div><div><label>School Code</label><input id="esc"></div><div><label>Basic Salary</label><input id="eb" type="number"></div><div><label>Bank Title</label><input id="eat"></div><div><label>Bank No</label><input id="ean"></div><div><label>CNIC</label><input id="ecnic"></div><div><label>Designation</label><input id="edes"></div></div><div class="actions"><button class="primary" onclick="addEmp()">Save Employee</button><button onclick="refresh()">Load Employees</button></div></div><div class="card"><h2>Employees</h2>${table(state.employees,['Employee_ID','Employee_Name','Campus','School_Code','Basic_Salary','Bank_Account_Title','Bank_Account_No','CNIC','Payment_Remarks'])}</div>`}
+async function addEmp(){try{const p={employeeName:en.value,campus:ec.value,schoolCode:esc.value,basicSalary:eb.value,bankAccountTitle:eat.value,bankAccountNo:ean.value,cnic:ecnic.value,designation:edes.value}; const r=await jsonp('addEmployee',p); setMsg('Employee saved: '+r.employeeId+' '+(r.warnings||[]).join(', ')); await refresh();}catch(e){setMsg(e.message,true)}}
+function attendance(){view.innerHTML=`<div class="card"><h2>Bulk Attendance</h2><p class="muted">Paste rows: Employee_ID, Employee_Name, School_Code, Absent_Days</p><textarea id="attText" placeholder="230101018-001, Ali, 230101018, 3"></textarea><div class="actions"><button class="primary" onclick="saveAtt()">Save Attendance</button></div></div>`}
+async function saveAtt(){try{const entries=parseLines(attText.value,['employeeId','employeeName','schoolCode','absentDays']); const r=await jsonp('attendance',{...params(),entries}); setMsg('Attendance saved: '+r.saved); await refresh();}catch(e){setMsg(e.message,true)}}
+function apd(){view.innerHTML=`<div class="card"><h2>Advance / Petty / Deduction</h2><div class="grid"><div><label>Type</label><select id="apdtype"><option value="advance">Advance</option><option value="petty">Petty Cash</option><option value="deduction">Manual Deduction</option></select></div></div><p class="muted">Advance: Employee_ID, Name, Advance_Add, Installment, Remarks<br>Petty: Employee_ID, Name, Amount, Details<br>Deduction: Employee_ID, Name, Amount, Remarks</p><textarea id="apdText"></textarea><div class="actions"><button class="primary" onclick="saveAPD()">Save</button></div></div>`}
+async function saveAPD(){try{let type=apdtype.value, entries=[]; if(type==='advance')entries=parseLines(apdText.value,['employeeId','employeeName','advanceAdd','installment','remarks']); if(type==='petty')entries=parseLines(apdText.value,['employeeId','employeeName','amount','details']); if(type==='deduction')entries=parseLines(apdText.value,['employeeId','employeeName','amount','remarks']); const action=type==='advance'?'advance':type==='petty'?'petty':'deduction'; const r=await jsonp(action,{...params(),entries}); setMsg('Saved: '+r.saved); await refresh();}catch(e){setMsg(e.message,true)}}
+function salaryGrid(){view.innerHTML=`<div class="card"><h2>Salary Grid</h2><div class="actions"><button class="primary" onclick="genSal()">Generate Salary</button><button onclick="approveSal()">Approve / Lock</button><button onclick="refresh()">Load Salary</button></div></div><div class="card tableWrap">${table(state.salary,['Employee_ID','Employee_Name','School_Code','Basic_Salary','Absent_Days','Deductible_Absent_Days','Absent_Deduction','Advance_Add','Installment','Remaining_Advance','Manual_Deduction','Petty_Cash_Amount','Salary_Net_Pay','Account_Wise_Total','Status'])}</div>`}
+async function genSal(){try{const r=await jsonp('salaryGenerate',params()); setMsg('Generated: '+r.generated); await refresh();}catch(e){setMsg(e.message,true)}}
+async function approveSal(){try{if(!confirm('Lock/approve salary?'))return; const r=await jsonp('salaryApprove',{...params(),remarks:'Approved from mobile frontend'}); setMsg('Approved: '+r.approved); await refresh();}catch(e){setMsg(e.message,true)}}
+function bank(){view.innerHTML=`<div class="card"><h2>Bank Summary</h2><div class="actions"><button onclick="refresh()">Load Bank</button><button onclick="downloadCSV()">Download CSV</button></div></div><div class="card tableWrap">${table(state.bank,['Employee_ID','Employee_Name','Bank_Account_Title','Bank_Account_No','Salary_Net_Pay','Petty_Cash_Amount','Account_Wise_Total','Details'])}</div>`}
+function table(rows,cols){if(!rows||!rows.length)return '<p class="muted">No rows found.</p>'; return `<div class="tableWrap"><table><thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${cols.map(c=>`<td>${r[c]??''}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`}
+function parseLines(text,keys){return text.split(/\n+/).map(x=>x.trim()).filter(Boolean).map(line=>{const p=line.split(/\t|,/).map(x=>x.trim()); const o={}; keys.forEach((k,i)=>o[k]=p[i]||''); return o;});}
+function downloadCSV(){const rows=state.bank||[]; if(!rows.length)return setMsg('No bank rows',true); const cols=Object.keys(rows[0]); const csv=[cols.join(',')].concat(rows.map(r=>cols.map(c=>'"'+String(r[c]??'').replace(/"/g,'""')+'"').join(','))).join('\n'); const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'})); a.download='bank_summary.csv'; a.click();}
+init();
 </script>
-
 </body>
 </html>
