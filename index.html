@@ -2,30 +2,60 @@
 <html lang="sd" dir="ltr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>IBFSS Salary System</title>
+<title>IBFSS Salary System Login</title>
 <style>
-:root{--brand:#0f766e;--bg:#f3f6f8;--card:#fff;--muted:#64748b;--line:#e2e8f0;--danger:#b91c1c}*{box-sizing:border-box}body{margin:0;font-family:Arial,'Noto Sans Arabic',sans-serif;background:var(--bg);color:#0f172a}.wrap{max-width:1200px;margin:auto;padding:12px}.card{background:var(--card);border-radius:18px;padding:16px;margin:12px 0;box-shadow:0 10px 30px rgba(15,23,42,.06)}h1{margin:0;font-size:30px}.top{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}.tabs{display:flex;gap:8px;overflow-x:auto;padding:3px}.tab,button{border:0;border-radius:12px;padding:11px 14px;font-weight:700;background:#e2e8f0;color:#0f172a;cursor:pointer;white-space:nowrap}.tab.active,button.primary{background:var(--brand);color:white}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}label{display:block;font-size:13px;font-weight:700;margin-bottom:5px}input,select,textarea{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:white}textarea{min-height:120px}.muted{color:var(--muted);font-size:13px}.ok{color:#047857;font-weight:700}.err{color:var(--danger);font-weight:700}.stat{border:1px solid var(--line);background:#f8fafc;border-radius:14px;padding:13px}.stat b{display:block;font-size:24px;margin-top:6px}.tableWrap{overflow:auto}table{border-collapse:collapse;width:100%;background:white}th,td{border-bottom:1px solid var(--line);padding:8px;text-align:left;font-size:13px;white-space:nowrap}th{background:#f1f5f9;position:sticky;top:0}.hide{display:none}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}@media(max-width:650px){.wrap{padding:8px}.card{border-radius:14px;padding:12px}h1{font-size:24px}.grid{grid-template-columns:1fr}.tab,button{width:auto;padding:10px 12px}th,td{font-size:12px;padding:7px}}
+:root{--brand:#0f766e;--bg:#f3f6f8;--card:#fff;--muted:#64748b;--line:#e2e8f0;--danger:#b91c1c}*{box-sizing:border-box}body{margin:0;font-family:Arial,'Noto Sans Arabic',sans-serif;background:var(--bg);color:#0f172a}.wrap{max-width:1200px;margin:auto;padding:12px}.card{background:var(--card);border-radius:18px;padding:16px;margin:12px 0;box-shadow:0 10px 30px rgba(15,23,42,.06)}h1{margin:0;font-size:30px}.top{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}.tabs{display:flex;gap:8px;overflow-x:auto;padding:3px}.tab,button{border:0;border-radius:12px;padding:11px 14px;font-weight:700;background:#e2e8f0;color:#0f172a;cursor:pointer;white-space:nowrap}.tab.active,button.primary{background:var(--brand);color:white}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}label{display:block;font-size:13px;font-weight:700;margin-bottom:5px}input,select,textarea{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:white}textarea{min-height:120px}.muted{color:var(--muted);font-size:13px}.ok{color:#047857;font-weight:700}.err{color:var(--danger);font-weight:700}.stat{border:1px solid var(--line);background:#f8fafc;border-radius:14px;padding:13px}.stat b{display:block;font-size:24px;margin-top:6px}.tableWrap{overflow:auto}table{border-collapse:collapse;width:100%;background:white}th,td{border-bottom:1px solid var(--line);padding:8px;text-align:left;font-size:13px;white-space:nowrap}th{background:#f1f5f9;position:sticky;top:0}.hide{display:none}.loginBox{max-width:460px;margin:40px auto}.logout{background:#fee2e2;color:#991b1b}.smallBtn{padding:9px 11px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}@media(max-width:650px){.wrap{padding:8px}.card{border-radius:14px;padding:12px}h1{font-size:24px}.grid{grid-template-columns:1fr}.tab,button{width:auto;padding:10px 12px}th,td{font-size:12px;padding:7px}}
 </style>
 </head>
 <body>
-<div class="wrap">
- <div class="card top"><div><h1>IBFSS Salary System <span class="muted">FINAL</span></h1><div id="user" class="muted">Loading...</div></div><div class="tabs" id="tabs"></div></div>
+<div id="loginScreen" class="wrap hide">
+  <div class="card loginBox">
+    <h1>IBFSS Salary Login</h1>
+    <p class="muted">Email ۽ PIN سان login ڪريو.</p>
+    <div class="grid">
+      <div><label>Email</label><input id="loginEmail" type="email" placeholder="your@email.com"></div>
+      <div><label>PIN</label><input id="loginPin" type="password" inputmode="numeric" placeholder="PIN"></div>
+      <div><label>API URL</label><input id="loginApi" placeholder="Apps Script Web App URL"></div>
+    </div>
+    <div class="actions"><button class="primary" onclick="doLogin()">Login</button><button onclick="testLoginApi()">Test API</button></div>
+    <p id="loginMsg" class="muted"></p>
+    <p class="muted">پهريون دفعو PIN: 1234. پوءِ Users sheet ۾ PIN تبديل ڪريو.</p>
+  </div>
+</div>
+<div id="appRoot" class="wrap hide">
+ <div class="card top"><div><h1>IBFSS Salary System <span class="muted">FINAL LOGIN</span></h1><div id="user" class="muted">Loading...</div></div><div class="tabs" id="tabs"></div><button class="logout smallBtn" onclick="logout()">Logout</button></div>
  <div class="card"><div class="grid"><div><label>Year</label><input id="year" type="number"></div><div><label>Month</label><select id="month"></select></div><div><label>Campus</label><input id="campus" placeholder="Campus name"></div><div><label>API URL</label><input id="api" placeholder="Apps Script Web App URL"></div></div><div class="actions"><button class="primary" onclick="saveApi();refresh()">Refresh</button><button onclick="ping()">Test API</button></div><p id="msg" class="muted"></p></div>
  <div id="view"></div>
 </div>
 <script>
-const DEFAULT_API='https://script.google.com/macros/s/AKfycbxUiwgK0MF7S6OkW991sD2pRUAySL1R4ta56q3Hi945UdRpL68PvYWnT1CknIxXwqWFag/exec';
+const DEFAULT_API='PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
 let state={tab:'Dashboard',months:['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'],employees:[],salary:[],bank:[],dashboard:{}};
+const SESSION_KEY='ibfss_session_token';
+const USER_KEY='ibfss_session_user';
+const LAST_KEY='ibfss_last_activity';
+const IDLE_LIMIT_MS=30*60*1000;
 const tabNames=['Dashboard','Employees','Attendance','Advance / Petty / Deduction','Salary Grid','Bank'];
 function $(id){return document.getElementById(id)}
 function money(n){return Number(n||0).toLocaleString('en-US')}
 function setMsg(t,err){$('msg').textContent=t||'';$('msg').className=err?'err':'ok'}
 function params(){return {year:+$('year').value,month:$('month').value,campus:$('campus').value.trim()}}
-function saveApi(){localStorage.ibfss_api=$('api').value.trim()}
+function saveApi(){localStorage.ibfss_api=$('api').value.trim(); if($('loginApi'))$('loginApi').value=$('api').value.trim()}
 function apiUrl(){return ($('api').value||localStorage.ibfss_api||DEFAULT_API).trim()}
-function jsonp(action,payload={}){return new Promise((res,rej)=>{const cb='cb_'+Date.now()+'_'+Math.floor(Math.random()*9999); window[cb]=r=>{delete window[cb];s.remove();r&&r.ok?res(r.data):rej(new Error(r.error||'API error'))}; const url=apiUrl()+'?action='+encodeURIComponent(action)+'&callback='+cb+'&payload='+encodeURIComponent(JSON.stringify(payload)); const s=document.createElement('script'); s.src=url; s.onerror=()=>{delete window[cb];rej(new Error('API not reachable. Check Web App URL / deployment.'))}; document.body.appendChild(s);});}
-async function init(){ $('api').value=localStorage.ibfss_api||DEFAULT_API; $('year').value=new Date().getFullYear(); state.months.forEach(m=>$('month').insertAdjacentHTML('beforeend',`<option>${m}</option>`)); tabs.innerHTML=tabNames.map(t=>`<button class="tab ${t===state.tab?'active':''}" onclick="state.tab='${t}';render()">${t}</button>`).join(''); await ping(false); render(); }
-async function ping(show=true){try{const c=await jsonp('context'); $('user').textContent=(c.email||'')+' | '+(c.role||'ADMIN')+' | '+(c.version||''); if(show)setMsg('API connected')}catch(e){setMsg(e.message,true)}}
+function token(){return sessionStorage.getItem(SESSION_KEY)||''}
+function currentUser(){try{return JSON.parse(sessionStorage.getItem(USER_KEY)||'{}')}catch(e){return {}}}
+function touch(){sessionStorage.setItem(LAST_KEY,String(Date.now()))}
+function isIdleExpired(){const last=Number(sessionStorage.getItem(LAST_KEY)||0);return last && Date.now()-last>IDLE_LIMIT_MS}
+function jsonp(action,payload={}){return new Promise((res,rej)=>{if(action!=='login'&&action!=='ping')payload.token=token(); const cb='cb_'+Date.now()+'_'+Math.floor(Math.random()*9999); window[cb]=r=>{delete window[cb];s.remove(); if(r&&r.ok){if(action!=='ping')touch(); res(r.data)}else rej(new Error(r.error||'API error'))}; const url=apiUrl()+'?action='+encodeURIComponent(action)+'&callback='+cb+'&payload='+encodeURIComponent(JSON.stringify(payload)); const s=document.createElement('script'); s.src=url; s.onerror=()=>{delete window[cb];rej(new Error('API not reachable. Check Web App URL / deployment.'))}; document.body.appendChild(s);});}
+async function init(){ $('api').value=localStorage.ibfss_api||DEFAULT_API; $('loginApi').value=localStorage.ibfss_api||DEFAULT_API; $('loginEmail').value=localStorage.ibfss_email||''; $('year').value=new Date().getFullYear(); state.months.forEach(m=>$('month').insertAdjacentHTML('beforeend',`<option>${m}</option>`)); tabs.innerHTML=tabNames.map(t=>`<button class="tab ${t===state.tab?'active':''}" onclick="state.tab='${t}';render()">${t}</button>`).join(''); if(!token()||isIdleExpired()){showLogin('Please login');return;} try{showApp(); await ping(false); await refresh();}catch(e){logout('Session expired. Please login again');} }
+async function ping(show=true){try{const c=await jsonp('context'); $('user').textContent=(c.email||'')+' | '+(c.role||'ADMIN')+' | '+(c.version||''); if(show)setMsg('API connected')}catch(e){setMsg(e.message,true); if(String(e.message).includes('login')||String(e.message).includes('Session'))logout(e.message)}}
+function showLogin(t){$('appRoot').classList.add('hide');$('loginScreen').classList.remove('hide');$('loginMsg').textContent=t||''}
+function showApp(){$('loginScreen').classList.add('hide');$('appRoot').classList.remove('hide')}
+async function testLoginApi(){try{localStorage.ibfss_api=$('loginApi').value.trim();$('api').value=$('loginApi').value.trim();const p=await jsonp('ping');$('loginMsg').textContent='API OK: '+(p.version||'');$('loginMsg').className='ok'}catch(e){$('loginMsg').textContent=e.message;$('loginMsg').className='err'}}
+async function doLogin(){try{localStorage.ibfss_api=$('loginApi').value.trim();localStorage.ibfss_email=$('loginEmail').value.trim();$('api').value=$('loginApi').value.trim();const r=await jsonp('login',{email:$('loginEmail').value.trim(),pin:$('loginPin').value.trim()});sessionStorage.setItem(SESSION_KEY,r.token);sessionStorage.setItem(USER_KEY,JSON.stringify(r.user));touch();showApp();$('user').textContent=(r.user.email||'')+' | '+(r.user.role||'')+' | '+(r.version||'');await refresh()}catch(e){$('loginMsg').textContent=e.message;$('loginMsg').className='err'}}
+function logout(message){sessionStorage.removeItem(SESSION_KEY);sessionStorage.removeItem(USER_KEY);sessionStorage.removeItem(LAST_KEY);state.employees=[];state.salary=[];state.bank=[];state.dashboard={};showLogin(message||'Logged out')}
+['click','keydown','touchstart'].forEach(ev=>document.addEventListener(ev,()=>{if(token())touch()},{passive:true}));
+setInterval(()=>{if(token()&&isIdleExpired())logout('30 minutes inactive. Please login again')},60000);
+
 async function refresh(){try{saveApi(); const p=params(); const [e,s,b,d]=await Promise.all([jsonp('employees',{campus:p.campus}),jsonp('salaryRows',p),jsonp('bankRows',p),jsonp('dashboard',p)]); state.employees=e;state.salary=s;state.bank=b;state.dashboard=d;setMsg('Data refreshed');render();}catch(e){setMsg(e.message,true)}}
 function render(){tabs.innerHTML=tabNames.map(t=>`<button class="tab ${t===state.tab?'active':''}" onclick="state.tab='${t}';render()">${t}</button>`).join(''); if(state.tab==='Dashboard')return dashboard(); if(state.tab==='Employees')return employees(); if(state.tab==='Attendance')return attendance(); if(state.tab==='Advance / Petty / Deduction')return apd(); if(state.tab==='Salary Grid')return salaryGrid(); if(state.tab==='Bank')return bank();}
 function dashboard(){const d=state.dashboard||{}; const items=[['Employees',d.employees],['Salary Rows',d.salaryRows],['Generated',d.generated],['Approved',d.approved],['Basic Total',d.basicTotal],['Absent Deduction',d.absentDeduction],['Installment',d.installment],['Manual Deduction',d.manualDeduction],['Petty Cash',d.pettyCash],['Salary Net Pay',d.salaryNetPay],['Account Wise Total',d.accountTotal],['Bank Rows',d.bankRows]]; view.innerHTML=`<div class="card"><h2>Dashboard Summary</h2><div class="grid">${items.map(x=>`<div class="stat"><span>${x[0]}</span><b>${money(x[1])}</b></div>`).join('')}</div></div>`}
